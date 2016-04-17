@@ -40,6 +40,7 @@ dependencies {
     providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
 
 	testCompile "org.springframework.boot:spring-boot-starter-test"
+	testCompile 'org.jsoup:jsoup:1.9.1'
 }
 
 

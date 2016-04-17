@@ -8,7 +8,11 @@ import java.io.IOException;
 public class HandlebarsRenderer {
     private final Handlebars handlebars;
 
-    public HandlebarsRenderer(Handlebars handlebars) {
+    public static HandlebarsRenderer aRenderer() {
+        return new HandlebarsRenderer(new Handlebars());
+    }
+
+    HandlebarsRenderer(Handlebars handlebars) {
         this.handlebars = handlebars;
     }
 

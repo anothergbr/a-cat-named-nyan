@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -24,9 +22,6 @@ class HomeController {
     @ResponseBody
     @RequestMapping(value = "/", method = GET, produces = "text/html")
     public String root() throws IOException {
-        Map<String, String> viewContext = new HashMap<>();
-        viewContext.put("name", "World");
-
-        return viewRenderer.render("/templates/home", viewContext);
+        return viewRenderer.render("/templates/home", null);
     }
 }

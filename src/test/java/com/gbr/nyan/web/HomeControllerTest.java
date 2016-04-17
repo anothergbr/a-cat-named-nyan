@@ -4,7 +4,6 @@ import com.gbr.nyan.support.HandlebarsRenderer;
 import org.junit.Before;
 import org.junit.Test;
 
-import static java.util.Collections.singletonMap;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyObject;
@@ -28,7 +27,7 @@ public class HomeControllerTest {
     public void passesTheContextToTheViewRenderer() throws Exception {
         controller.root();
 
-        verify(viewRenderer).render("/templates/home", singletonMap("name", "World"));
+        verify(viewRenderer).render("/templates/home", null);
     }
 
     @Test
