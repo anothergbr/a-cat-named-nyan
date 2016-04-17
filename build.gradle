@@ -32,13 +32,14 @@ repositories {
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-security')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile("org.springframework.boot:spring-boot-devtools")
+	compile "org.springframework.boot:spring-boot-starter-security"
+	compile "org.springframework.boot:spring-boot-starter-web"
+	compile "org.springframework.boot:spring-boot-devtools"
 
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
+    testRuntime "org.springframework.boot:spring-boot-starter-tomcat" // allows launching the app in IntelliJ without no-class-def exceptions
 
-	testCompile('org.springframework.boot:spring-boot-starter-test') 
+	testCompile "org.springframework.boot:spring-boot-starter-test"
 }
 
 
