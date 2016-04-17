@@ -48,5 +48,9 @@ task copyToolsToLibs(type: Copy) {
 }
 
 task stage {
-  dependsOn build, copyToolsToLibs
+  dependsOn assemble, copyToolsToLibs
+}
+
+tasks.stage.doLast() {
+    delete "build/libs/a-cat-named-nyan-${version}.war.original"
 }
