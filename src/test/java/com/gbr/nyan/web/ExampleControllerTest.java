@@ -1,37 +1,34 @@
 package com.gbr.nyan.web;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.Assert.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.http.HttpStatus.OK;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 public class ExampleControllerTest {
-    private MockMvc mockedServer;
-
-    @Before
-    public void setupFakeController() throws Exception {
-        mockedServer = MockMvcBuilders.standaloneSetup(new ExampleController()).build();
-    }
+    @Autowired
+    private TestRestTemplate httpClient;
 
     @Test
     public void returns200OnRoot() throws Exception {
-        mockedServer.perform(get("/"))
-                .andExpect(status().isOk());
+        ResponseEntity<String> rootResponse = httpClient.getForEntity("/", String.class);
+        assertThat(rootResponse.getStatusCode(), is(OK));
     }
 
     @Test
     public void returnsHelloWorldOnRoot() throws Exception {
-        mockedServer.perform(get("/"))
-                .andExpect(content().string(is("Hello World!")));
+        ResponseEntity<String> rootResponse = httpClient.getForEntity("/", String.class);
+        assertThat(rootResponse.getBody(), containsString("Hello World!"));
     }
 }
