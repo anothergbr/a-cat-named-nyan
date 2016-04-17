@@ -48,5 +48,5 @@ task copyToolsToLibs(type: Copy) {
 }
 
 task stage {
-  dependsOn build, copyToLib
+  dependsOn build, copyToolsToLibs
 }
