@@ -16,12 +16,13 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'spring-boot' 
 
-jar {
-	baseName = 'a-cat-named-nyan'
-	version = '0.0.1-SNAPSHOT'
-}
+version = '0.1'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:all"
+}
 
 repositories {
 	mavenCentral()
