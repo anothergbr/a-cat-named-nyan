@@ -1,4 +1,6 @@
 # a-cat-named-nyan
+[![Build Status](https://travis-ci.org/anothergbr/a-cat-named-nyan.svg?branch=master)](https://travis-ci.org/anothergbr/a-cat-named-nyan)
+
 a very simple java web app integrated with appdirect's APIs
 
 ## Requirements
