@@ -37,7 +37,6 @@ dependencies {
 	compile "org.springframework.boot:spring-boot-devtools"
 
     providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
-    testRuntime "org.springframework.boot:spring-boot-starter-tomcat" // allows launching the app in IntelliJ without no-class-def exceptions
 
 	testCompile "org.springframework.boot:spring-boot-starter-test"
 }
