@@ -1,39 +1,40 @@
 package com.gbr.nyan.web;
 
+import com.gbr.nyan.support.HandlebarsRenderer;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 
+import static java.util.Collections.singletonMap;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.http.HttpStatus.OK;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
 public class HomeControllerTest {
-    @Autowired
-    private TestRestTemplate httpClient;
-    private ResponseEntity<String> rootResponse;
+
+    private HomeController controller;
+    private HandlebarsRenderer viewRenderer;
 
     @Before
-    public void thisController() {
-        rootResponse = httpClient.getForEntity("/", String.class);
+    public void thisController() throws Exception {
+        viewRenderer = mock(HandlebarsRenderer.class);
+        when(viewRenderer.render(anyString(), anyObject())).thenReturn("the body");
+
+        controller = new HomeController(viewRenderer);
     }
 
     @Test
-    public void returnsOk() throws Exception {
-        assertThat(rootResponse.getStatusCode(), is(OK));
+    public void passesTheContextToTheViewRenderer() throws Exception {
+        controller.root();
+
+        verify(viewRenderer).render("/templates/home", singletonMap("name", "World"));
     }
 
     @Test
-    public void returnsUtf8Html() throws Exception {
-        String contentType = rootResponse.getHeaders().getContentType().toString();
-        assertThat(contentType, is("text/html;charset=UTF-8"));
+    public void returnsTheViewResults() throws Exception {
+        String responseBody = controller.root();
+
+        assertThat(responseBody, is("the body"));
     }
 }
