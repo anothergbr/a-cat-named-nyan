@@ -1,4 +1,4 @@
-package com.gbr.controller;
+package com.gbr.nyan.web;
 
 import org.junit.Before;
 import org.junit.Test;

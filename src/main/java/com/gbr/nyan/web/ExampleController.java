@@ -1,4 +1,4 @@
-package com.gbr.controller;
+package com.gbr.nyan.web;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
