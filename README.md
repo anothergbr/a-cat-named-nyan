@@ -1,5 +1,5 @@
 # a-cat-named-nyan
-[![Build Status](https://travis-ci.org/anothergbr/a-cat-named-nyan.svg?branch=master)](https://travis-ci.org/anothergbr/a-cat-named-nyan)
+[![Build Status](https://travis-ci.org/anothergbr/a-cat-named-nyan.svg?branch=master)](https://travis-ci.org/anothergbr/a-cat-named-nyan) [![Coverage Status](https://coveralls.io/repos/github/anothergbr/a-cat-named-nyan/badge.svg?branch=master)](https://coveralls.io/github/anothergbr/a-cat-named-nyan?branch=master)
 
 a very simple java web app integrated with appdirect's APIs
 

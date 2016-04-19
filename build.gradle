@@ -1,20 +1,27 @@
 buildscript {
-	ext {
-		springBootVersion = '1.4.0.M2'
-	}
-	repositories {
-		mavenCentral()
-		maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
-	}
+    ext {
+        springBootVersion = '1.4.0.M2'
+    }
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
-apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: 'spring-boot' 
+
+plugins {
+    id "com.github.kt3k.coveralls" version "2.6.3"
+}
+
+
+apply plugin: "java"
+apply plugin: "war"
+apply plugin: "spring-boot"
+apply plugin: "jacoco"
 
 version = '0.1'
 sourceCompatibility = 1.8
@@ -25,22 +32,33 @@ tasks.withType(JavaCompile) {
 }
 
 repositories {
-	mavenCentral()
-	maven { url "https://repo.spring.io/snapshot" }
-	maven { url "https://repo.spring.io/milestone" }
+    mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 
 dependencies {
     compile 'com.github.jknack:handlebars:4.0.5'
-	compile "org.springframework.boot:spring-boot-starter-security"
-	compile "org.springframework.boot:spring-boot-starter-web"
-	compile "org.springframework.boot:spring-boot-devtools"
+    compile "org.springframework.boot:spring-boot-starter-security"
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-devtools"
 
     providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
 
-	testCompile "org.springframework.boot:spring-boot-starter-test"
-	testCompile 'org.jsoup:jsoup:1.9.1'
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile 'org.jsoup:jsoup:1.9.1'
+}
+
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
 }
 
 
@@ -50,7 +68,7 @@ task copyToolsToLibs(type: Copy) {
 }
 
 task stage {
-  dependsOn assemble, copyToolsToLibs
+    dependsOn assemble, copyToolsToLibs
 }
 
 tasks.stage.doLast() {
