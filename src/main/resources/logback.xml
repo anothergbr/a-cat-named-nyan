@@ -5,7 +5,16 @@
         </encoder>
     </appender>
 
-    <root level="DEBUG">
+    <!-- silence a few noisy loggers -->
+    <logger name="org.apache.catalina" level="WARN"/>
+    <logger name="org.apache.tomcat" level="WARN"/>
+    <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.springframework" level="WARN"/>
+
+    <!-- enable request logging -->
+    <logger name="com.gbr.nyan.support.FullRequestLogFilter" level="DEBUG"/>
+
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
