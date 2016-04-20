@@ -7,7 +7,6 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Scanner;
 
 import static java.util.Collections.list;
 
@@ -31,9 +30,11 @@ public class FullRequestLogFilter {
                 for (String header : list(request.getHeaderNames())) {
                     logger.debug("\t* {}: {}", new Object[]{header, request.getHeader(header)});
                 }
-                Scanner qs = new Scanner(request.getInputStream()).useDelimiter("\\A");
-                String qb = qs.hasNext() ? qs.next() : "[empty body]";
-                logger.debug("### Request body: `{}` ###", qb);
+
+                logger.debug("### Request Parameters:");
+                for (String paramName : list(request.getParameterNames())) {
+                    logger.debug("\t* {}: {}", new Object[]{paramName, request.getParameter(paramName)});
+                }
             }
 
             @Override

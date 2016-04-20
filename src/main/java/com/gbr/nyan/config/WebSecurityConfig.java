@@ -11,6 +11,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         noSecurityAtAll(http);
+        noCsrfNeither(http);
+    }
+
+    private void noCsrfNeither(HttpSecurity http) throws Exception {
+        http.csrf().disable();
     }
 
     private void noSecurityAtAll(HttpSecurity http) throws Exception {
