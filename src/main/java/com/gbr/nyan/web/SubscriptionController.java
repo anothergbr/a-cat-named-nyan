@@ -12,8 +12,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class SubscriptionController {
 
     @ResponseBody
-    @RequestMapping(value = "/subscription/create/notification", method = GET, produces = "text/html")
+    @RequestMapping(value = "/subscription/create/notification", method = GET, consumes = "*", produces = "text/html")
     public String create() throws IOException {
-        return "todo";
+        return "<html><body>1!!!</body></html>";
     }
 }
