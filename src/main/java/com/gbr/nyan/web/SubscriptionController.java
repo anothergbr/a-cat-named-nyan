@@ -12,8 +12,17 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class SubscriptionController {
 
     @ResponseBody
-    @RequestMapping(value = "/subscription/create/notification", method = GET, consumes = "*", produces = "text/html")
-    public String create() throws IOException {
-        return "<html><body>1!!!</body></html>";
+    @RequestMapping(value = "/subscription/create/notification", method = GET, consumes = "*", produces = "application/json")
+    public FakeResponse create() throws IOException {
+        return new FakeResponse("success");
     }
+
+    private class FakeResponse {
+        public final String status;
+
+        public FakeResponse(String status) {
+            this.status = status;
+        }
+    }
+
 }
