@@ -11,7 +11,6 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class HomeControllerTest {
-
     private HomeController controller;
     private HandlebarsRenderer viewRenderer;
 

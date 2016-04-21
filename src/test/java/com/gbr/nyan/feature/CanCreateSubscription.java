@@ -45,15 +45,15 @@ public class CanCreateSubscription {
     }
 
     @Test
-    public void successWhenDummyEventUrlIsPassed() throws Exception {
-        HttpGet createDummySubscription = get(createSubscription(), "eventUrl", "http://localhost:42534/v1/events/dummySubscription");
+    public void respondsToStatelessEventsWithWellFormedErrorResponse() throws Exception {
+        HttpGet createDummySubscription = get(createSubscription(), "eventUrl", "http://localhost:42534/v1/events/dummyOrder");
 
         HttpResponse response = anAppDirectHttpClient().execute(createDummySubscription);
 
-        assertThat(fakeAppDirect.lastRequestPath(), is("/v1/events/dummySubscription"));
+        assertThat(fakeAppDirect.lastRequestPath(), is("/v1/events/dummyOrder"));
 
         assertThat(response.getStatusLine().getStatusCode(), is(200));
-        assertThat(EntityUtils.toString(response.getEntity()), is("{\"accountIdentifier\":\"some-id\",\"success\":\"true\"}"));
+        assertThat(EntityUtils.toString(response.getEntity()), is("{\"errorCode\":\"UNKNOWN_ERROR\",\"success\":\"false\"}"));
     }
 
     @Test

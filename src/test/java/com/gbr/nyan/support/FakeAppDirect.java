@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
-import static java.nio.charset.Charset.forName;
-
 /**
  * Strongly inspired by http://stackoverflow.com/a/3732328/26605
  */
@@ -27,7 +25,7 @@ public class FakeAppDirect {
     }
 
     public FakeAppDirect start() {
-        server.createContext("/v1/events/dummySubscription", new SubscriptionCreateDummy());
+        server.createContext("/v1/events/dummyOrder", new SubscriptionCreateDummy());
 
         server.start();
         return this;
@@ -44,7 +42,7 @@ public class FakeAppDirect {
     private class SubscriptionCreateDummy implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-            byte[] response = "{\"some\":\"json\"}".getBytes(forName("utf-8"));
+            byte[] response = ContentOf.resource("events/subscription-order-stateless.json");
             t.sendResponseHeaders(200, response.length);
             OutputStream os = t.getResponseBody();
             os.write(response);
