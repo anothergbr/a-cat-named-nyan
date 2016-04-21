@@ -25,15 +25,23 @@ public class CanCreateSubscription {
     private int serverPort;
 
     @Test
-    public void returnsOk() throws Exception {
-        // TODO: add oauth authorization header, i.e.
-        // authorization: OAuth oauth_consumer_key="a-cat-named-nyan-105612", oauth_nonce="-7162822245644540921", oauth_signature="0kL0WN17Sw8yhaAw4PkkFvVEnbY%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1461183771", oauth_version="1.0"
-
+    public void failsWhenNoEvenUrlIsPassed() throws Exception {
         HttpGet createSubscription = new HttpGet(baseServerUrl() + "/subscription/create/notification");
         CloseableHttpResponse response = appDirectHttpClient().execute(createSubscription);
 
         assertThat(response.getStatusLine().getStatusCode(), is(200));
-        assertThat(EntityUtils.toString(response.getEntity()), is("{\"status\":\"success\"}"));
+        assertThat(EntityUtils.toString(response.getEntity()), is("{\"errorCode\":\"INVALID_RESPONSE\",\"success\":false}"));
+    }
+
+    @Test
+    public void successWhenEventUrlIsPassed() throws Exception {
+        // TODO: code this (with a fake server, confirm url is hit)
+    }
+
+    @Test
+    public void failureWhenOauthSignatureIsInvalid() throws Exception {
+        // TODO: eventually support oauth signature verification from auth header, i.e.
+        // authorization: OAuth oauth_consumer_key="a-cat-named-nyan-105612", oauth_nonce="-7162822245644540921", oauth_signature="0kL0WN17Sw8yhaAw4PkkFvVEnbY%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1461183771", oauth_version="1.0"
     }
 
     private CloseableHttpClient appDirectHttpClient() {
