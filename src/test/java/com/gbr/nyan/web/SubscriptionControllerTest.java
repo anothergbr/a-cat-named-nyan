@@ -1,9 +1,9 @@
 package com.gbr.nyan.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gbr.nyan.appdirect.SubscriptionEventService;
 import com.gbr.nyan.appdirect.entity.SubscriptionEvent;
 import com.gbr.nyan.appdirect.entity.SubscriptionResponse;
-import com.gbr.nyan.appdirect.service.SubscriptionEventService;
 import com.gbr.nyan.support.HttpClient;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +15,7 @@ import static com.gbr.nyan.appdirect.entity.SubscriptionResponse.success;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
 
 public class SubscriptionControllerTest {
@@ -30,6 +31,15 @@ public class SubscriptionControllerTest {
         subscriptionEventService = mock(SubscriptionEventService.class);
 
         controller = new SubscriptionController(httpClient, jacksonObjectMapper, subscriptionEventService);
+    }
+
+    @Test
+    public void failsWhenNoEventUrlIsPassed() throws Exception {
+        ResponseEntity<SubscriptionResponse> response = controller.create(Optional.empty());
+
+        assertThat(response.getStatusCode(), is(BAD_REQUEST));
+        assertThat(response.getBody().getSuccess(), is("false"));
+        assertThat(response.getBody().getErrorCode(), is("INVALID_RESPONSE"));
     }
 
     @Test

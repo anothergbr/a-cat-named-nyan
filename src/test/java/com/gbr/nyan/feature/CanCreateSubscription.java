@@ -36,15 +36,6 @@ public class CanCreateSubscription {
     }
 
     @Test
-    public void failsWhenNoEventUrlIsPassed() throws Exception {
-        HttpGet createSubscription = get(createSubscription());
-        HttpResponse response = anAppDirectHttpClient().execute(createSubscription);
-
-        assertThat(response.getStatusLine().getStatusCode(), is(400));
-        assertThat(EntityUtils.toString(response.getEntity()), is("{\"errorCode\":\"INVALID_RESPONSE\",\"success\":\"false\"}"));
-    }
-
-    @Test
     public void respondsToStatelessEventsWithWellFormedErrorResponse() throws Exception {
         HttpGet createDummySubscription = get(createSubscription(), "eventUrl", "http://localhost:42534/v1/events/dummyOrder");
 
