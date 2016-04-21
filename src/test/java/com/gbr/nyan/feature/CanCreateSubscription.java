@@ -1,18 +1,22 @@
 package com.gbr.nyan.feature;
 
+import com.gbr.nyan.support.FakeAppDirect;
 import org.apache.http.HttpHeaders;
-import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.context.web.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.gbr.nyan.support.HttpClientHelper.get;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -23,19 +27,38 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 public class CanCreateSubscription {
     @LocalServerPort
     private int serverPort;
+    private FakeAppDirect fakeAppDirect;
 
-    @Test
-    public void failsWhenNoEvenUrlIsPassed() throws Exception {
-        HttpGet createSubscription = new HttpGet(baseServerUrl() + "/subscription/create/notification");
-        CloseableHttpResponse response = appDirectHttpClient().execute(createSubscription);
+    @Before
+    public void startFakeAppDirect() throws Exception {
+        fakeAppDirect = FakeAppDirect.create(42534).start();
+    }
 
-        assertThat(response.getStatusLine().getStatusCode(), is(200));
-        assertThat(EntityUtils.toString(response.getEntity()), is("{\"errorCode\":\"INVALID_RESPONSE\",\"success\":false}"));
+    @After
+    public void stopFakeServer() {
+        fakeAppDirect.stop();
     }
 
     @Test
-    public void successWhenEventUrlIsPassed() throws Exception {
-        // TODO: code this (with a fake server, confirm url is hit)
+    public void failsWhenNoEvenUrlIsPassed() throws Exception {
+        HttpGet createSubscription = get(createSubscription());
+        HttpResponse response = appDirectHttpClient().execute(createSubscription);
+
+        assertThat(response.getStatusLine().getStatusCode(), is(400));
+        assertThat(EntityUtils.toString(response.getEntity()), is("{\"errorCode\":\"INVALID_RESPONSE\",\"success\":\"false\"}"));
+    }
+
+    @Test
+    public void successWhenDummyEventUrlIsPassed() throws Exception {
+        HttpGet createDummySubscription = get(createSubscription(), "eventUrl", "http://localhost:42534/v1/events/dummySubscription");
+
+        HttpResponse response = appDirectHttpClient().execute(createDummySubscription);
+
+        // TODO: fix controller so server is called
+        // assertThat(fakeAppDirect.lastRequestPath(), is("/v1/events/dummySubscription"));
+
+        assertThat(response.getStatusLine().getStatusCode(), is(200));
+        assertThat(EntityUtils.toString(response.getEntity()), is("{\"accountIdentifier\":\"some-id\",\"success\":\"true\"}"));
     }
 
     @Test
@@ -52,6 +75,10 @@ public class CanCreateSubscription {
                         new BasicHeader(HttpHeaders.ACCEPT_ENCODING, "gzip, deflate")))
                 .disableRedirectHandling()
                 .build();
+    }
+
+    private String createSubscription() {
+        return baseServerUrl() + "/subscription/create/notification";
     }
 
     private String baseServerUrl() {

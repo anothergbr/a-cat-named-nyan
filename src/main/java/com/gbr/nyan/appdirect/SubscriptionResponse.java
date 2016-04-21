@@ -3,22 +3,18 @@ package com.gbr.nyan.appdirect;
 public class SubscriptionResponse {
     private String accountIdentifier;
     private String errorCode;
-    private boolean success;
+    private String success;
 
     public static SubscriptionResponse failure() {
-        return new SubscriptionResponse(false);
+        return new SubscriptionResponse("false");
     }
 
     public static SubscriptionResponse success() {
-        return new SubscriptionResponse(true);
+        return new SubscriptionResponse("true");
     }
 
-    private SubscriptionResponse(boolean success) {
+    private SubscriptionResponse(String success) {
         this.success = success;
-    }
-
-    public boolean isSuccess() {
-        return success;
     }
 
     public SubscriptionResponse withErrorCode(String errorCode) {
@@ -29,6 +25,10 @@ public class SubscriptionResponse {
     public SubscriptionResponse withAccountIdentifier(String accountIdentifier) {
         this.accountIdentifier = accountIdentifier;
         return this;
+    }
+
+    public String getSuccess() {
+        return success;
     }
 
     public String getErrorCode() {
