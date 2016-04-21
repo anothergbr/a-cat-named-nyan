@@ -1,11 +1,27 @@
 package com.gbr.nyan.support;
 
+import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicHeader;
 
 import java.net.URISyntaxException;
 
+import static java.util.Arrays.asList;
+
 public class HttpClientHelper {
+
+    public static CloseableHttpClient anAppDirectHttpClient() {
+        return HttpClients.custom()
+                .setUserAgent("Apache-HttpClient/4.3.6 (java 1.5)")
+                .setDefaultHeaders(asList(
+                        new BasicHeader(HttpHeaders.ACCEPT, "application/json, application/xml"),
+                        new BasicHeader(HttpHeaders.ACCEPT_ENCODING, "gzip, deflate")))
+                .disableRedirectHandling()
+                .build();
+    }
 
     public static HttpGet get(String endpoint, String... params) throws URISyntaxException {
         if (params.length % 2 != 0) {

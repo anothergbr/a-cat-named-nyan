@@ -43,13 +43,13 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-devtools"
-    compile "net.rakugakibox.springbootext:spring-boot-ext-logback-access:1.1"
+    compile "org.apache.httpcomponents:httpclient:4.5.2"
+    compile "net.rakugakibox.springbootext:spring-boot-ext-logback-access:1.1" // shows access log on console (only for embedded containers)
 
     providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
 
     testCompile "org.springframework.boot:spring-boot-starter-test"
     testCompile "org.jsoup:jsoup:1.9.1"
-    testCompile "org.apache.httpcomponents:httpclient:4.5.2"
 }
 
 

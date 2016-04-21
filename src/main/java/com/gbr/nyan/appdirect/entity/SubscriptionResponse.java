@@ -1,4 +1,4 @@
-package com.gbr.nyan.appdirect;
+package com.gbr.nyan.appdirect.entity;
 
 public class SubscriptionResponse {
     private String accountIdentifier;
