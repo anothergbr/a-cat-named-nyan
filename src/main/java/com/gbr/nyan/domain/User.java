@@ -10,7 +10,7 @@ public class User {
     @Id
     private String email;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Account account;
 
     @Column

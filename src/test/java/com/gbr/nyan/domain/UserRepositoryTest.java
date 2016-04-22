@@ -21,21 +21,24 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = MOCK)
 public class UserRepositoryTest {
     @Autowired
-    UserRepository repository;
+    private UserRepository repository;
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
+
+    private Account existingAccount;
 
     @Before
-    public void emptyRepository() {
+    public void emptyRepositoryAndCreateOneAccount() {
         repository.deleteAll();
         accountRepository.deleteAll();
+
+        existingAccount = aSavedAccount();
     }
 
     @Test
-    public void savesNewUserWithAccount() throws Exception {
-        User aNewUser = aNewUser("some@email.com", "Gerry");
-        aNewUser.setAccount(aSavedAccount());
+    public void savesNewUser() throws Exception {
+        User aNewUser = aNewUser("some@email.com", existingAccount, "Gerry");
 
         repository.save(aNewUser);
         User retrievedUser = repository.findOne(aNewUser.getEmail());
@@ -46,14 +49,15 @@ public class UserRepositoryTest {
 
     @Test
     public void retrievesExistingUsers() throws Exception {
-        repository.save(asList(aNewUser("test@email.ca", "Richard"), aNewUser("other@email.jp", "Stephanie")));
+        repository.save(asList(aNewUser("test@email.ca", existingAccount, "Richard"), aNewUser("other@email.jp", existingAccount, "Stephanie")));
 
         List<User> allUsers = toList(repository.findAll());
         assertThat(allUsers.size(), is(2));
     }
 
-    private User aNewUser(String email, String firstName) {
+    private User aNewUser(String email, Account account, String firstName) {
         User newUser = new User(email);
+        newUser.setAccount(account);
         newUser.setFirstName(firstName);
 
         return newUser;
@@ -62,8 +66,8 @@ public class UserRepositoryTest {
     private Account aSavedAccount() {
         Account account = new Account();
         account.setEdition(PREMIUM);
-        accountRepository.save(account);
 
+        accountRepository.save(account);
         return account;
     }
 }
