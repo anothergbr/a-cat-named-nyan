@@ -15,7 +15,6 @@ import static com.gbr.nyan.domain.Account.Edition.PREMIUM;
 import static com.gbr.nyan.support.Iterables.toList;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.MOCK;
 
@@ -32,12 +31,12 @@ public class AccountRepositoryTest {
 
     @Test
     public void savesNewAccount() throws Exception {
-        Account aNewAccount = new Account();
-        aNewAccount.setEdition(PREMIUM);
+        Account aNewAccount = aNewAccount(PREMIUM);
 
         repository.save(aNewAccount);
+        Account retrievedAccount = repository.findOne(aNewAccount.getId());
 
-        assertThat(aNewAccount.getId(), is(notNullValue()));
+        assertThat(retrievedAccount.getEdition(), is(PREMIUM));
     }
 
     @Test

@@ -32,6 +32,10 @@ public class Account {
         this.edition = edition;
     }
 
+    public Edition getEdition() {
+        return edition;
+    }
+
     public enum Edition {
         PREMIUM, BASIC
     }

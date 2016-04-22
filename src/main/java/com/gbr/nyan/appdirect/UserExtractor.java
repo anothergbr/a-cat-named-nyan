@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserExtractor {
     public User fromEvent(SubscriptionEvent event) {
-        return new User();
+        return new User("some@email.com");
     }
 }

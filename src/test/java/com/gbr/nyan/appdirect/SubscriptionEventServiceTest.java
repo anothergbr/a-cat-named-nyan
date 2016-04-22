@@ -70,14 +70,14 @@ public class SubscriptionEventServiceTest {
     }
 
     @Test
-    public void assignsNewAccountIdToUser() {
+    public void assignsNewAccountToUser() {
         User aNewUser = someUser();
         when(userExtractor.fromEvent(any())).thenReturn(aNewUser);
         when(accountExtractor.fromEvent(any())).thenReturn(someAccount("this-is-the-new-account-id"));
 
         service.create(someEvent().build());
 
-        assertThat(aNewUser.getAccountId(), is("this-is-the-new-account-id"));
+        assertThat(aNewUser.getAccount().getId(), is("this-is-the-new-account-id"));
     }
 
     private Account someAccount(String id) {
@@ -85,6 +85,6 @@ public class SubscriptionEventServiceTest {
     }
 
     private User someUser() {
-        return new User();
+        return new User("some-email@domain.com");
     }
 }
