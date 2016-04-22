@@ -1,9 +1,9 @@
 package com.gbr.nyan.support.builder;
 
+import com.gbr.nyan.appdirect.entity.Flag;
 import com.gbr.nyan.appdirect.entity.SubscriptionEvent;
-import com.gbr.nyan.appdirect.entity.SubscriptionEvent.Flag;
 
-import static com.gbr.nyan.appdirect.entity.SubscriptionEvent.Flag.STATELESS;
+import static com.gbr.nyan.appdirect.entity.Flag.STATELESS;
 
 public class SubscriptionEventBuilder {
     private Flag flag;

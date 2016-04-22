@@ -9,7 +9,7 @@ import com.gbr.nyan.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.gbr.nyan.appdirect.entity.SubscriptionEvent.Flag.STATELESS;
+import static com.gbr.nyan.appdirect.entity.Flag.STATELESS;
 import static com.gbr.nyan.appdirect.entity.SubscriptionResponse.failure;
 import static com.gbr.nyan.appdirect.entity.SubscriptionResponse.success;
 

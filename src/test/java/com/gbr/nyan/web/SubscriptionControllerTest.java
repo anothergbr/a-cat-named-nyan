@@ -1,6 +1,6 @@
 package com.gbr.nyan.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gbr.nyan.appdirect.SubscriptionEventParser;
 import com.gbr.nyan.appdirect.SubscriptionEventService;
 import com.gbr.nyan.appdirect.entity.SubscriptionEvent;
 import com.gbr.nyan.appdirect.entity.SubscriptionResponse;
@@ -21,16 +21,16 @@ import static org.springframework.http.HttpStatus.OK;
 public class SubscriptionControllerTest {
     private SubscriptionController controller;
     private HttpClient httpClient;
-    private ObjectMapper jacksonObjectMapper;
+    private SubscriptionEventParser eventParser;
     private SubscriptionEventService subscriptionEventService;
 
     @Before
     public void thisController() throws Exception {
         httpClient = mock(HttpClient.class);
-        jacksonObjectMapper = mock(ObjectMapper.class);
+        eventParser = mock(SubscriptionEventParser.class);
         subscriptionEventService = mock(SubscriptionEventService.class);
 
-        controller = new SubscriptionController(httpClient, jacksonObjectMapper, subscriptionEventService);
+        controller = new SubscriptionController(httpClient, eventParser, subscriptionEventService);
     }
 
     @Test
@@ -50,18 +50,18 @@ public class SubscriptionControllerTest {
     }
 
     @Test
-    public void passesTheEventToJackson() throws Exception {
+    public void parsesTheEvent() throws Exception {
         when(httpClient.get("http://some-event-url")).thenReturn("some-json");
 
         controller.create(Optional.of("http://some-event-url"));
 
-        verify(jacksonObjectMapper).readValue("some-json", SubscriptionEvent.class);
+        verify(eventParser).fromJson("some-json");
     }
 
     @Test
     public void sendsTheParsedEventToTheService() throws Exception {
         SubscriptionEvent someEvent = new SubscriptionEvent();
-        when(jacksonObjectMapper.readValue(anyString(), eq(SubscriptionEvent.class))).thenReturn(someEvent);
+        when(eventParser.fromJson(anyString())).thenReturn(someEvent);
 
         controller.create(Optional.of("http://some-event-url"));
 
@@ -70,7 +70,6 @@ public class SubscriptionControllerTest {
 
     @Test
     public void returnsTheServiceResponseWrappedInHttpOk() throws Exception {
-        SubscriptionEvent someEvent = new SubscriptionEvent();
         when(subscriptionEventService.create(any())).thenReturn(success().withAccountIdentifier("some-new-id"));
 
         ResponseEntity<SubscriptionResponse> response = controller.create(Optional.of("http://some-event-url"));

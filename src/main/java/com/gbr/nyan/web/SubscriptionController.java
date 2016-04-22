@@ -1,6 +1,6 @@
 package com.gbr.nyan.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gbr.nyan.appdirect.SubscriptionEventParser;
 import com.gbr.nyan.appdirect.SubscriptionEventService;
 import com.gbr.nyan.appdirect.entity.SubscriptionEvent;
 import com.gbr.nyan.appdirect.entity.SubscriptionResponse;
@@ -21,13 +21,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @Controller
 public class SubscriptionController {
     private final HttpClient jsonHttpClient;
-    private final ObjectMapper jacksonObjectMapper;
+    private final SubscriptionEventParser subscriptionEventParser;
     private final SubscriptionEventService subscriptionEventService;
 
     @Autowired
-    public SubscriptionController(HttpClient jsonHttpClient, ObjectMapper jacksonObjectMapper, SubscriptionEventService subscriptionEventService) {
+    public SubscriptionController(HttpClient jsonHttpClient, SubscriptionEventParser subscriptionEventParser, SubscriptionEventService subscriptionEventService) {
         this.jsonHttpClient = jsonHttpClient;
-        this.jacksonObjectMapper = jacksonObjectMapper;
+        this.subscriptionEventParser = subscriptionEventParser;
         this.subscriptionEventService = subscriptionEventService;
     }
 
@@ -38,7 +38,7 @@ public class SubscriptionController {
         }
 
         String rawCreateEvent = jsonHttpClient.get(eventUrl.get());
-        SubscriptionEvent createEvent = jacksonObjectMapper.readValue(rawCreateEvent, SubscriptionEvent.class);
+        SubscriptionEvent createEvent = subscriptionEventParser.fromJson(rawCreateEvent);
 
         SubscriptionResponse response = subscriptionEventService.create(createEvent);
         return ok(response);

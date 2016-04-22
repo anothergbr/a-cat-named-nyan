@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
+import static com.gbr.nyan.support.ContentOf.resourceAsBytes;
+
 /**
  * Strongly inspired by http://stackoverflow.com/a/3732328/26605
  */
@@ -25,7 +27,8 @@ public class FakeAppDirect {
     }
 
     public FakeAppDirect start() {
-        server.createContext("/v1/events/dummyOrder", new SubscriptionCreateDummy());
+        server.createContext("/v1/events/dummyOrder", new ReturnJson("events/subscription-order-stateless.json"));
+        server.createContext("/v1/events/dev-order", new ReturnJson("events/subscription-order-development.json"));
 
         server.start();
         return this;
@@ -39,10 +42,18 @@ public class FakeAppDirect {
         return lastRequestPath;
     }
 
-    private class SubscriptionCreateDummy implements HttpHandler {
+    private class ReturnJson implements HttpHandler {
+        private final String jsonResource;
+
+        private ReturnJson(String jsonResource) {
+            this.jsonResource = jsonResource;
+        }
+
         @Override
         public void handle(HttpExchange t) throws IOException {
-            byte[] response = ContentOf.resource("events/subscription-order-stateless.json");
+            t.getResponseHeaders().add("Content-Type", "application/json");
+
+            byte[] response = resourceAsBytes(jsonResource);
             t.sendResponseHeaders(200, response.length);
             OutputStream os = t.getResponseBody();
             os.write(response);
