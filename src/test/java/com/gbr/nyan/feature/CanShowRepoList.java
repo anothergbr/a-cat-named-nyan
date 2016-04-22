@@ -16,20 +16,21 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class CanShowHomePage {
+public class CanShowRepoList {
     @Autowired
     private TestRestTemplate httpClient;
-    private ResponseEntity<String> rootResponse;
+    private ResponseEntity<String> repoListResponse;
 
     @Before
     public void thisPage() {
-        rootResponse = httpClient.getForEntity("/", String.class);
+        repoListResponse = httpClient.getForEntity("/repo-list", String.class);
     }
 
     @Test
     public void returnsOkAndUtf8Html() throws Exception {
-        String contentType = rootResponse.getHeaders().getContentType().toString();
-        assertThat(rootResponse.getStatusCode(), is(OK));
+        String contentType = repoListResponse.getHeaders().getContentType().toString();
+
+        assertThat(repoListResponse.getStatusCode(), is(OK));
         assertThat(contentType, is("text/html;charset=UTF-8"));
     }
 }
