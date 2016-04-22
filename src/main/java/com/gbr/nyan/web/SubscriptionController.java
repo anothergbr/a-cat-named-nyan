@@ -4,7 +4,7 @@ import com.gbr.nyan.appdirect.SubscriptionEventParser;
 import com.gbr.nyan.appdirect.SubscriptionEventService;
 import com.gbr.nyan.appdirect.entity.SubscriptionEvent;
 import com.gbr.nyan.appdirect.entity.SubscriptionResponse;
-import com.gbr.nyan.support.HttpClient;
+import com.gbr.nyan.web.support.HttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package com.gbr.nyan.support;
+package com.gbr.nyan.web.support;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

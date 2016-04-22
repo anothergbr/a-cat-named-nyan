@@ -1,4 +1,4 @@
-package com.gbr.nyan.support;
+package com.gbr.nyan.web.support;
 
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;

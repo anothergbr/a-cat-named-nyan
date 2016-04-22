@@ -4,7 +4,7 @@ import com.gbr.nyan.appdirect.SubscriptionEventParser;
 import com.gbr.nyan.appdirect.SubscriptionEventService;
 import com.gbr.nyan.appdirect.entity.SubscriptionEvent;
 import com.gbr.nyan.appdirect.entity.SubscriptionResponse;
-import com.gbr.nyan.support.HttpClient;
+import com.gbr.nyan.web.support.HttpClient;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
