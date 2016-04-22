@@ -22,7 +22,7 @@ public class HomeViewTest {
 
     @Before
     public void thisView() throws Exception {
-        Map<String, String> viewContext = new HashMap<>();
+        Map<String, Object> viewContext = new HashMap<>();
         document = Jsoup.parse(aRenderer().render("/templates/home", viewContext));
     }
 

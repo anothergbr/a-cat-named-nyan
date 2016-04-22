@@ -5,6 +5,7 @@ import com.github.jknack.handlebars.Template;
 import org.junit.Before;
 import org.junit.Test;
 
+import static java.util.Collections.singletonMap;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
@@ -27,23 +28,23 @@ public class HandlebarsRendererTest {
 
     @Test
     public void compilesTheHandlebarTemplate() throws Exception {
-        renderer.render("some-view", "some-context");
+        renderer.render("some-view", singletonMap("some", "context"));
 
         verify(handlebars).compile("some-view");
     }
 
     @Test
     public void appliesContextToTemplate() throws Exception {
-        renderer.render("some-view", "some-context");
+        renderer.render("some-view", singletonMap("some", "context"));
 
-        verify(someTemplate).apply("some-context");
+        verify(someTemplate).apply(singletonMap("some", "context"));
     }
 
     @Test
     public void returnsTemplateResults() throws Exception {
         when(someTemplate.apply(anyString())).thenReturn("this is the results of the template");
 
-        String replacedTemplate = renderer.render("some-view", "some-context");
+        String replacedTemplate = renderer.render("some-view", singletonMap("some", "context"));
 
         assertThat(replacedTemplate, is("this is the results of the template"));
     }
