@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class AccountExtractor {
     public Account fromEvent(SubscriptionEvent event) {
-        Account account = new Account();
-        account.setId("some-id");
-        return account;
+        return new Account("some-id");
     }
 }

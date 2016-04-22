@@ -81,9 +81,7 @@ public class SubscriptionEventServiceTest {
     }
 
     private Account someAccount(String id) {
-        Account account = new Account();
-        account.setId(id);
-        return account;
+        return new Account(id);
     }
 
     private User someUser() {

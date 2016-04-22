@@ -1,10 +1,6 @@
 package com.gbr.nyan.domain;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 
-@Repository
-public class AccountRepository {
-    public void save(Account account) {
-
-    }
+public interface AccountRepository extends CrudRepository<Account, String> {
 }

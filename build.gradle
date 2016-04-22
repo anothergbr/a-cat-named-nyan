@@ -43,9 +43,11 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-devtools"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.apache.httpcomponents:httpclient:4.5.2"
     compile "net.rakugakibox.springbootext:spring-boot-ext-logback-access:1.1" // shows access log on console (only for embedded containers)
 
+    runtime "com.h2database:h2:1.4.191"
     providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
 
     testCompile "org.springframework.boot:spring-boot-starter-test"

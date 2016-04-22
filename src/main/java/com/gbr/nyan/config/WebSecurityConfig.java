@@ -12,6 +12,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         noSecurityAtAll(http);
         noCsrfNeither(http);
+        allowFrames(http);
+    }
+
+    private void allowFrames(HttpSecurity http) throws Exception {
+        http.headers().frameOptions().disable();
     }
 
     private void noCsrfNeither(HttpSecurity http) throws Exception {
