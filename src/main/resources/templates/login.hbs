@@ -1,0 +1,22 @@
+{{> templates/partials/header }}
+
+<body>
+{{> templates/partials/nav-bar }}
+
+<div class="container bigTopMargin">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <form name="appdirect-openid-signin" action="/login/openid" method="post" id="appdirect-openid-signin">
+                <input type="hidden" name="openid_identifier" value="https://gabrielspub.byappdirect.com/openid/id"/>
+                <label for="submit" class="btn btn-default btn-lg btn-block">
+                    log in with <img src="img/appdirect-logo-100px.png"/>
+                    <input id="submit" type="submit" class="hidden"/>
+                </label>
+            </form>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+</body>
+</html>

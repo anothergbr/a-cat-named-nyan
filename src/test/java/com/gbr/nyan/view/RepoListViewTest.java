@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.gbr.nyan.support.EveryViews.shouldIncludeBootstrap;
 import static com.gbr.nyan.support.HandlebarsRenderer.aRenderer;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -23,6 +24,11 @@ public class RepoListViewTest {
         viewContext.put("rendering-repo-list", true);
 
         document = Jsoup.parse(aRenderer().render("/templates/repo-list", viewContext));
+    }
+
+    @Test
+    public void includesBootstrap() {
+        shouldIncludeBootstrap(document);
     }
 
     @Test

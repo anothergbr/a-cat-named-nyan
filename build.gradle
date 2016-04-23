@@ -39,12 +39,13 @@ repositories {
 
 
 dependencies {
+    compile "org.apache.httpcomponents:httpclient:4.5.2"
     compile 'com.github.jknack:handlebars:4.0.5'
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.springframework.boot:spring-boot-starter-security"
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-devtools"
-    compile "org.springframework.boot:spring-boot-starter-data-jpa"
-    compile "org.apache.httpcomponents:httpclient:4.5.2"
+    compile "org.springframework.security:spring-security-openid"
     compile "net.rakugakibox.springbootext:spring-boot-ext-logback-access:1.1" // shows access log on console (only for embedded containers)
 
     runtime "com.h2database:h2:1.4.191"
