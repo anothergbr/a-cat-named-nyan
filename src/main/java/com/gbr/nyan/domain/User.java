@@ -7,6 +7,8 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class User extends UserBasicHardcodedSpringSecurityStuff {
+    private final static long serialVersionUID = -1;
+
     @Id
     private String email;
     @Column(unique = true)

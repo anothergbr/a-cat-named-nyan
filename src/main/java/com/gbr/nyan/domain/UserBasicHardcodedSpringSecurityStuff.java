@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 public abstract class UserBasicHardcodedSpringSecurityStuff implements UserDetails {
+    private final static long serialVersionUID = -1;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
