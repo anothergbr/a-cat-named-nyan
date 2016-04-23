@@ -38,27 +38,39 @@ public class UserRepositoryTest {
 
     @Test
     public void savesNewUser() throws Exception {
-        User aNewUser = aNewUser("some@email.com", existingAccount, "Gerry");
+        User aNewUser = aNewUser("some@email.com", existingAccount, "Gerry X");
 
         repository.save(aNewUser);
         User retrievedUser = repository.findOne(aNewUser.getEmail());
 
-        assertThat(retrievedUser.getFirstName(), is("Gerry"));
+        assertThat(retrievedUser.getFullName(), is("Gerry X"));
         assertThat(retrievedUser.getAccount(), is(notNullValue()));
     }
 
     @Test
     public void retrievesExistingUsers() throws Exception {
-        repository.save(asList(aNewUser("test@email.ca", existingAccount, "Richard"), aNewUser("other@email.jp", existingAccount, "Stephanie")));
+        repository.save(asList(aNewUser("test@email.ca", existingAccount, "Richard Y"), aNewUser("other@email.jp", existingAccount, "Stephanie Z")));
 
         List<User> allUsers = toList(repository.findAll());
         assertThat(allUsers.size(), is(2));
     }
 
-    private User aNewUser(String email, Account account, String firstName) {
-        User newUser = new User(email);
+    @Test
+    public void findsUserByOpenIdUrl() throws Exception {
+        User aNewUser = aNewUser("some@email.ca", existingAccount, "Hopen Highdee");
+        aNewUser.setOpenIdUrl("12345@openid.com");
+
+        repository.save(aNewUser);
+        User retrievedUser = repository.findByOpenIdUrl("12345@openid.com");
+
+        assertThat(retrievedUser.getFullName(), is("Hopen Highdee"));
+    }
+
+    private User aNewUser(String email, Account account, String fullName) {
+        User newUser = new User();
+        newUser.setEmail(email);
         newUser.setAccount(account);
-        newUser.setFirstName(firstName);
+        newUser.setFullName(fullName);
 
         return newUser;
     }

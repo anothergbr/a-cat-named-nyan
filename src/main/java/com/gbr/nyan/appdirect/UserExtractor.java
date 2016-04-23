@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 public class UserExtractor {
     public User fromEvent(SubscriptionEvent event) {
         // TODO: fill this
-        return new User("some@email.com");
+        User user = new User();
+        user.setEmail("some@email.com");
+        return user;
     }
 }

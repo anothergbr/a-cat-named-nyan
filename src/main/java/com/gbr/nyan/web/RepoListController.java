@@ -53,8 +53,10 @@ class RepoListController {
         newAccount.setEdition(BASIC);
         accountRepository.save(newAccount);
 
-        User user = new User("some" + newAccount.getId() + "s@email.com");
+        User user = new User();
+        user.setEmail("some" + newAccount.getId() + "s@email.com");
         user.setAccount(newAccount);
+
         userRepository.save(user);
     }
 }

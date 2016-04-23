@@ -70,6 +70,8 @@ public class RepoListControllerTest {
     }
 
     private User someUser(String email) {
-        return new User(email);
+        User user = new User();
+        user.setEmail(email);
+        return user;
     }
 }

@@ -85,6 +85,6 @@ public class SubscriptionEventServiceTest {
     }
 
     private User someUser() {
-        return new User("some-email@domain.com");
+        return new User();
     }
 }
