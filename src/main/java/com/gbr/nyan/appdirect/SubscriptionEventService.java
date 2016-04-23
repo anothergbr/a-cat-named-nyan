@@ -17,11 +17,11 @@ import static com.gbr.nyan.appdirect.entity.SubscriptionResponse.success;
 public class SubscriptionEventService {
     private final AccountExtractor accountExtractor;
     private final AccountRepository accountRepository;
-    private final UserExtractor userExtractor;
+    private final EventUserExtractor userExtractor;
     private final UserRepository userRepository;
 
     @Autowired
-    public SubscriptionEventService(AccountExtractor accountExtractor, AccountRepository accountRepository, UserExtractor userExtractor, UserRepository userRepository) {
+    public SubscriptionEventService(AccountExtractor accountExtractor, AccountRepository accountRepository, EventUserExtractor userExtractor, UserRepository userRepository) {
         this.accountExtractor = accountExtractor;
         this.accountRepository = accountRepository;
         this.userExtractor = userExtractor;

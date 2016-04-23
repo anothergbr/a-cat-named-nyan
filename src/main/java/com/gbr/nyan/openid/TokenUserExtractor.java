@@ -1,6 +1,5 @@
-package com.gbr.nyan.appdirect;
+package com.gbr.nyan.openid;
 
-import com.gbr.nyan.appdirect.entity.SubscriptionEvent;
 import com.gbr.nyan.domain.User;
 import org.springframework.security.openid.OpenIDAttribute;
 import org.springframework.security.openid.OpenIDAuthenticationToken;
@@ -9,14 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class UserExtractor {
-    public User fromEvent(SubscriptionEvent event) {
-        // TODO: fill this
-        User user = new User();
-        user.setEmail("some@email.com");
-        return user;
-    }
-
+public class TokenUserExtractor {
     public User fromOpenIdToken(OpenIDAuthenticationToken token) {
         String email = null;
         String uuid = null;

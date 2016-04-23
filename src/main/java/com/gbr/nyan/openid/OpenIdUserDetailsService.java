@@ -1,4 +1,4 @@
-package com.gbr.nyan.appdirect;
+package com.gbr.nyan.openid;
 
 import com.gbr.nyan.domain.User;
 import com.gbr.nyan.domain.UserRepository;
@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OpenIdUserDetailsService implements UserDetailsService, AuthenticationUserDetailsService<OpenIDAuthenticationToken> {
-    private final UserExtractor userExtractor;
+    private final TokenUserExtractor userExtractor;
     private final UserRepository userRepository;
 
     @Autowired
-    public OpenIdUserDetailsService(UserExtractor userExtractor, UserRepository userRepository) {
+    public OpenIdUserDetailsService(TokenUserExtractor userExtractor, UserRepository userRepository) {
         this.userExtractor = userExtractor;
         this.userRepository = userRepository;
     }

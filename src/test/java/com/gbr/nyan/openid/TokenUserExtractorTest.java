@@ -1,4 +1,4 @@
-package com.gbr.nyan.appdirect;
+package com.gbr.nyan.openid;
 
 import com.gbr.nyan.domain.User;
 import org.junit.Test;
@@ -11,8 +11,8 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.springframework.security.openid.OpenIDAuthenticationStatus.SUCCESS;
 
-public class UserExtractorFromTokenTest {
-    private UserExtractor extractor = new UserExtractor();
+public class TokenUserExtractorTest {
+    private TokenUserExtractor extractor = new TokenUserExtractor();
 
     @Test
     public void extractsUserFromFullToken() {

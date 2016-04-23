@@ -1,6 +1,6 @@
 package com.gbr.nyan.config;
 
-import com.gbr.nyan.appdirect.OpenIdUserDetailsService;
+import com.gbr.nyan.openid.OpenIdUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,7 +1,8 @@
-package com.gbr.nyan.appdirect;
+package com.gbr.nyan.openid;
 
 import com.gbr.nyan.domain.User;
 import com.gbr.nyan.domain.UserRepository;
+import org.hibernate.cfg.NotYetImplementedException;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.openid.OpenIDAuthenticationStatus;
@@ -13,13 +14,13 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class OpenIdUserDetailsServiceTest {
-    private UserExtractor userExtractor;
+    private TokenUserExtractor userExtractor;
     private UserRepository userRepository;
     private OpenIdUserDetailsService service;
 
     @Before
     public void thisService() throws Exception {
-        userExtractor = mock(UserExtractor.class);
+        userExtractor = mock(TokenUserExtractor.class);
         userRepository = mock(UserRepository.class);
 
         service = new OpenIdUserDetailsService(userExtractor, userRepository);
@@ -46,6 +47,11 @@ public class OpenIdUserDetailsServiceTest {
 
         assertThat(retrievedUser, is(newUser));
         verify(userRepository).save(newUser);
+    }
+
+    @Test(expected = NotYetImplementedException.class)
+    public void doesNotImplementLoadUserByUserNameBecauseItsNotNeeded() {
+        service.loadUserByUsername("any-id");
     }
 
     private User someUser() {
