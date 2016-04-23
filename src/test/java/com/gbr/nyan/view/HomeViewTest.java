@@ -23,6 +23,9 @@ public class HomeViewTest {
     @Before
     public void thisView() throws Exception {
         Map<String, Object> viewContext = new HashMap<>();
+        viewContext.put("page-title", "A very good title");
+        viewContext.put("rendering-home-page", true);
+
         document = Jsoup.parse(aRenderer().render("/templates/home", viewContext));
     }
 
@@ -38,8 +41,23 @@ public class HomeViewTest {
     }
 
     @Test
-    public void saysHelloWorld() {
+    public void hasProperTitle() {
+        assertThat(document.title(), is("A very good title"));
+    }
+
+    @Test
+    public void homeItemIsActiveInNavbar() {
+        Element activeElement = document.select("#navbar li.active").first();
+        assertThat(activeElement.text(), is("Home"));
+    }
+
+    @Test
+    public void suggestsToBuyTheApp() {
         Element firstTitle = document.getElementsByTag("h1").first();
-        assertThat(firstTitle.text(), is("Hello world!"));
+        assertThat(firstTitle.text(), is("A cat named Nyan can now be bought!"));
+
+        Element bigBuyButton = document.select("a.btn-lg").first();
+        assertThat(bigBuyButton.text(), is("Buy the app \u00BB"));
+        assertThat(bigBuyButton.attr("href"), is("https://gabrielspub.byappdirect.com"));
     }
 }

@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.gbr.nyan.domain.Account.Edition.BASIC;
 import static com.gbr.nyan.support.Iterables.toList;
-import static java.util.Collections.singletonMap;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
@@ -39,7 +40,12 @@ class RepoListController {
             createNewUser();
         }
 
-        return viewRenderer.render("/templates/repo-list", singletonMap("users", toList(userRepository.findAll())));
+        Map<String, Object> viewContext = new HashMap<>();
+        viewContext.put("page-title", "A cat named Nyan - Content of the repositories");
+        viewContext.put("rendering-repo-list", true);
+        viewContext.put("users", toList(userRepository.findAll()));
+
+        return viewRenderer.render("/templates/repo-list", viewContext);
     }
 
     private void createNewUser() {

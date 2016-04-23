@@ -8,11 +8,12 @@ import com.gbr.nyan.support.HandlebarsRenderer;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static java.util.Collections.singletonMap;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static org.hamcrest.Matchers.is;
@@ -45,7 +46,12 @@ public class RepoListControllerTest {
 
         controller.listRepos(empty());
 
-        verify(viewRenderer).render("/templates/repo-list", singletonMap("users", theUsers));
+        Map<String, Object> expectedContext = new HashMap<>();
+        expectedContext.put("page-title", "A cat named Nyan - Content of the repositories");
+        expectedContext.put("rendering-repo-list", true);
+        expectedContext.put("users", theUsers);
+
+        verify(viewRenderer).render("/templates/repo-list", expectedContext);
     }
 
     @Test

@@ -4,6 +4,9 @@ import com.gbr.nyan.support.HandlebarsRenderer;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyObject;
@@ -26,7 +29,11 @@ public class HomeControllerTest {
     public void passesTheContextToTheViewRenderer() throws Exception {
         controller.root();
 
-        verify(viewRenderer).render("/templates/home", null);
+        Map<String, Object> expectedContext = new HashMap<>();
+        expectedContext.put("page-title", "A cat named Nyan");
+        expectedContext.put("rendering-home-page", true);
+
+        verify(viewRenderer).render("/templates/home", expectedContext);
     }
 
     @Test
