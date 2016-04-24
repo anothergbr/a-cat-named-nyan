@@ -47,6 +47,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-devtools"
     compile "org.springframework.security:spring-security-openid"
     compile "net.rakugakibox.springbootext:spring-boot-ext-logback-access:1.1" // shows access log on console (only for embedded containers)
+    compile "org.postgresql:postgresql:9.4.1208"
 
     runtime "com.h2database:h2:1.4.191"
     providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
