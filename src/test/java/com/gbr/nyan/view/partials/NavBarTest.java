@@ -27,16 +27,16 @@ public class NavBarTest {
     public void showsLoginButtonWhenNotLoggedIn() throws IOException {
         Document loggedOutDoc = parse(aRenderer().render("/templates/partials/nav-bar", loggedOutView()));
 
-        Element loginButton = loggedOutDoc.select("a[href=login]").first();
+        Element loginButton = loggedOutDoc.select("a[href=/login]").first();
         assertThat(loginButton.text(), is("Login"));
     }
 
     @Test
     public void showsLogoutAndHidesLoginWhenLoggedIn() throws IOException {
-        Element logoutButton = loggedInDocument.select("a[href=logout]").first();
+        Element logoutButton = loggedInDocument.select("a[href=/logout]").first();
         assertThat(logoutButton.text(), is("Logout"));
 
-        Element loginButton = loggedInDocument.select("a[href=login]").first();
+        Element loginButton = loggedInDocument.select("a[href=/login]").first();
         assertThat(loginButton, is(nullValue()));
     }
 

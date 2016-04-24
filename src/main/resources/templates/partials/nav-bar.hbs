@@ -20,11 +20,11 @@
             <ul class="navbar-form navbar-right">
                 <li>
                     {{#if user-is-logged-in}}
-                        <a href="logout" class="btn btn-danger">
+                        <a href="/logout" class="btn btn-danger">
                             <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout
                         </a>
                     {{else}}
-                        <a href="login" class="btn btn-success {{#rendering-login-page}}disabled{{/rendering-login-page}}">
+                        <a href="/login" class="btn btn-success {{#rendering-login-page}}disabled{{/rendering-login-page}}">
                             <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login
                         </a>
                     {{/if}}
