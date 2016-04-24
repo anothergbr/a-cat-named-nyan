@@ -1,36 +1,28 @@
 package com.gbr.nyan.web.support;
 
 import org.junit.Test;
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.context.SecurityContextImpl;
 
-import static java.util.Collections.singletonList;
+import static com.gbr.nyan.web.support.SecurityContextHelper.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class UsersTest {
 
     @Test
-    public void isLoggedInWhenRoleUserIsPresent() {
-        fakeALoggedInUser("ROLE_USER");
-
-        assertTrue(Users.isUserLoggedIn());
+    public void isLoggedInWhenUserIsPresent() {
+        userLoggedIn();
+        assertTrue(Users.userIsLoggedIn());
     }
 
     @Test
-    public void isNotLoggedInWhenRoleUserIsAbsent() {
-        fakeALoggedInUser("ROLE_SOME_OTHER");
-
-        assertFalse(Users.isUserLoggedIn());
+    public void isNotLoggedInWhenAnonymousUserIsInContext() {
+        userNotLoggedIn();
+        assertFalse(Users.userIsLoggedIn());
     }
 
-    private void fakeALoggedInUser(String theOneRole) {
-        TestingAuthenticationToken loggedInUserToken = new TestingAuthenticationToken("some-user", null, singletonList(new SimpleGrantedAuthority(theOneRole)));
-        SecurityContextImpl contextWithALoggedInUser = new SecurityContextImpl();
-        contextWithALoggedInUser.setAuthentication(loggedInUserToken);
-
-        SecurityContextHolder.setContext(contextWithALoggedInUser);
+    @Test
+    public void isNotLoggedInWhenNothingIsInContext() {
+        nullAuthenticationToken();
+        assertFalse(Users.userIsLoggedIn());
     }
 }

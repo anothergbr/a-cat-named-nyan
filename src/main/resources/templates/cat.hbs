@@ -5,9 +5,21 @@
 
 
 <div class="container">
-    <h1>Thank you for buying</h1>
-    <p>TODO: show nyan cat embed only if active account is shown
-    </p>
+    {{#if user-has-active-subscription}}
+        <h1>Thank you for buying</h1>
+        <p>TODO: show nyan cat embed only if active account is shown
+        </p>
+    {{else}}
+        <div id="subscription-required-row" class="row bigTopMargin">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 alert alert-danger">
+                You need an active subscription to view this content.
+                Please buy one from the marketplace.
+
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    {{/if}}
 
     <hr>
 

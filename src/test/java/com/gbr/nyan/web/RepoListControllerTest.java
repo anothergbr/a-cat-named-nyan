@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.gbr.nyan.web.support.SecurityContextHelper.userNotLoggedIn;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static java.util.Optional.empty;
@@ -29,6 +30,8 @@ public class RepoListControllerTest {
 
     @Before
     public void thisController() throws Exception {
+        userNotLoggedIn();
+
         viewRenderer = mock(HandlebarsRenderer.class);
         userRepository = mock(UserRepository.class);
         accountRepository = mock(AccountRepository.class);

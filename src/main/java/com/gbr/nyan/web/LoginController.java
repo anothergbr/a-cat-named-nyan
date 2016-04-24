@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.gbr.nyan.web.support.Users.isUserLoggedIn;
+import static com.gbr.nyan.web.support.Users.userIsLoggedIn;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
@@ -30,7 +30,7 @@ class LoginController {
         Map<String, Object> viewContext = new HashMap<>();
         viewContext.put("page-title", "A cat named Nyan - login");
         viewContext.put("rendering-login-page", true);
-        viewContext.put("user-is-logged-in", isUserLoggedIn());
+        viewContext.put("user-is-logged-in", userIsLoggedIn());
         viewContext.put("show-error", error.isPresent());
         viewContext.put("show-logout-success", logout.isPresent());
 

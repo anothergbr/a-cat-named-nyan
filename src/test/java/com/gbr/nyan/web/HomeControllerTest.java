@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.gbr.nyan.web.support.SecurityContextHelper.userNotLoggedIn;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyObject;
@@ -19,6 +20,8 @@ public class HomeControllerTest {
 
     @Before
     public void thisController() throws Exception {
+        userNotLoggedIn();
+
         viewRenderer = mock(HandlebarsRenderer.class);
         when(viewRenderer.render(anyString(), anyObject())).thenReturn("the body");
 

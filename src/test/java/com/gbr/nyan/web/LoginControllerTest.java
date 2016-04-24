@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.gbr.nyan.web.support.SecurityContextHelper.userNotLoggedIn;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static org.hamcrest.Matchers.is;
@@ -21,6 +22,8 @@ public class LoginControllerTest {
 
     @Before
     public void thisController() throws Exception {
+        userNotLoggedIn();
+
         viewRenderer = mock(HandlebarsRenderer.class);
         when(viewRenderer.render(anyString(), anyObject())).thenReturn("the body");
 
