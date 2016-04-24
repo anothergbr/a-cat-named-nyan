@@ -9,8 +9,10 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>First Name</th>
+            <th>Full Name</th>
             <th>Email</th>
+            <th>AppDirect's UUID</th>
+            <th>OpenId Url</th>
             <th>Account Id</th>
         </tr>
         </thead>
@@ -18,9 +20,17 @@
         {{#users}}
             <tr>
                 <th scope=row>{{id}}</th>
-                <td>{{firstName}}</td>
+                <td>{{fullName}}</td>
                 <td>{{email}}</td>
-                <td>{{account.id}}</td>
+                <td>{{uuid}}</td>
+                <td>{{openIdUrl}}</td>
+                <td>
+                    {{#if account}}
+                        {{account.id}}
+                    {{else}}
+                        <span class="label label-warning">N/A</span>
+                    {{/if}}
+                </td>
             </tr>
         {{/users}}
         </tbody>
