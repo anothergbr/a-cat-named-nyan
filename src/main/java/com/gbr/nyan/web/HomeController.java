@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.gbr.nyan.web.support.Users.isUserLoggedIn;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
@@ -27,6 +28,7 @@ class HomeController {
         Map<String, Object> viewContext = new HashMap<>();
         viewContext.put("page-title", "A cat named Nyan");
         viewContext.put("rendering-home-page", true);
+        viewContext.put("user-is-logged-in", isUserLoggedIn());
 
         return viewRenderer.render("/templates/home", viewContext);
     }

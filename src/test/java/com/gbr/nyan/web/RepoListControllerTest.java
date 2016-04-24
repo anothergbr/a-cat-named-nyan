@@ -48,6 +48,7 @@ public class RepoListControllerTest {
 
         Map<String, Object> expectedContext = new HashMap<>();
         expectedContext.put("page-title", "A cat named Nyan - Content of the repositories");
+        expectedContext.put("user-is-logged-in", false);
         expectedContext.put("rendering-repo-list", true);
         expectedContext.put("users", theUsers);
 

@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static com.gbr.nyan.domain.Account.Edition.BASIC;
 import static com.gbr.nyan.support.Iterables.toList;
+import static com.gbr.nyan.web.support.Users.isUserLoggedIn;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
@@ -43,6 +44,7 @@ class RepoListController {
         Map<String, Object> viewContext = new HashMap<>();
         viewContext.put("page-title", "A cat named Nyan - Content of the repositories");
         viewContext.put("rendering-repo-list", true);
+        viewContext.put("user-is-logged-in", isUserLoggedIn());
         viewContext.put("users", toList(userRepository.findAll()));
 
         return viewRenderer.render("/templates/repo-list", viewContext);

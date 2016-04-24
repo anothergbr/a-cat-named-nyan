@@ -32,6 +32,7 @@ public class HomeControllerTest {
         Map<String, Object> expectedContext = new HashMap<>();
         expectedContext.put("page-title", "A cat named Nyan");
         expectedContext.put("rendering-home-page", true);
+        expectedContext.put("user-is-logged-in", false);
 
         verify(viewRenderer).render("/templates/home", expectedContext);
     }

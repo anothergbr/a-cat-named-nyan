@@ -31,6 +31,8 @@ public class LoginControllerTest {
 
         Map<String, Object> expectedContext = new HashMap<>();
         expectedContext.put("page-title", "A cat named Nyan - login");
+        expectedContext.put("rendering-login-page", true);
+        expectedContext.put("user-is-logged-in", false);
 
         verify(viewRenderer).render("/templates/login", expectedContext);
     }
