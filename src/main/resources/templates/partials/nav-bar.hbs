@@ -13,10 +13,22 @@
 
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li {{#rendering-home-page}}class="active"{{/rendering-home-page}}><a href="/">Home</a></li>
-                <li {{#rendering-repo-list}}class="active"{{/rendering-repo-list}}><a href="/repo-list">Content of the
-                    repositories</a></li>
+                <li {{#rendering-home-page}}class="active"{{/rendering-home-page}}>
+                    <a {{^rendering-home-page}}href="/"{{/rendering-home-page}}>Home</a>
+                </li>
+                <li {{#rendering-repo-list}}class="active"{{/rendering-repo-list}}>
+                    <a {{^rendering-repo-list}}href="/repo-list"{{/rendering-repo-list}}>Content of the repositories</a>
+                </li>
+                {{#user-is-logged-in}}
+                    <li id="the-cat" {{#rendering-cat-page}}class="active"{{/rendering-cat-page}}>
+                        <a {{^rendering-cat-page}}href="/cat"{{/rendering-cat-page}}
+                           title="See the dancing cat!" style="padding-bottom:13px; padding-top:12px">
+                            <img src="/img/nyan-cat-50px.gif" alt="animated nyan cat"/>
+                        </a>
+                    </li>
+                {{/user-is-logged-in}}
             </ul>
+
             <ul class="navbar-form navbar-right">
                 <li>
                     {{#if user-is-logged-in}}
@@ -24,7 +36,8 @@
                             <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout
                         </a>
                     {{else}}
-                        <a href="/login" class="btn btn-success {{#rendering-login-page}}disabled{{/rendering-login-page}}">
+                        <a id="login-btn" {{^rendering-login-page}}href="/login"{{/rendering-login-page}}
+                           class="btn btn-success {{#rendering-login-page}}disabled{{/rendering-login-page}}">
                             <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login
                         </a>
                     {{/if}}

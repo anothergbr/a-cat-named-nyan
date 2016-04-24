@@ -41,8 +41,9 @@ public class LoginViewTest {
 
     @Test
     public void loginButtonIsDisabledInNavbar() {
-        Element loginButton = document.select("a[href=/login]").first();
+        Element loginButton = document.getElementById("login-btn");
         assertThat(loginButton.hasClass("disabled"), is(true));
+        assertThat(loginButton.hasAttr("href"), is(false));
 
         Element activeElement = document.select("#navbar li.active").first();
         assertThat(activeElement, is(nullValue()));

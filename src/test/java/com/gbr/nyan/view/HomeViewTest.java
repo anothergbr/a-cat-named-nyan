@@ -40,6 +40,9 @@ public class HomeViewTest {
     public void homeItemIsActiveInNavbar() {
         Element activeElement = document.select("#navbar li.active").first();
         assertThat(activeElement.text(), is("Home"));
+
+        Element anchor = activeElement.select("a").first();
+        assertThat(anchor.hasAttr("href"), is(false));
     }
 
     @Test

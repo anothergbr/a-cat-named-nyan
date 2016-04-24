@@ -5,7 +5,6 @@ import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,19 +19,19 @@ public class NavBarTest {
 
     @Before
     public void thisView() throws Exception {
-        loggedInDocument = parse(aRenderer().render("/templates/partials/nav-bar", loggedInView()));
+        loggedInDocument = parse(loggedInView());
     }
 
     @Test
-    public void showsLoginButtonWhenNotLoggedIn() throws IOException {
-        Document loggedOutDoc = parse(aRenderer().render("/templates/partials/nav-bar", loggedOutView()));
+    public void showsLoginButtonWhenNotLoggedIn() throws Exception {
+        Document loggedOutDocument = parse(loggedOutView());
 
-        Element loginButton = loggedOutDoc.select("a[href=/login]").first();
+        Element loginButton = loggedOutDocument.select("a[href=/login]").first();
         assertThat(loginButton.text(), is("Login"));
     }
 
     @Test
-    public void showsLogoutAndHidesLoginWhenLoggedIn() throws IOException {
+    public void showsLogoutAndHidesLoginWhenLoggedIn() throws Exception {
         Element logoutButton = loggedInDocument.select("a[href=/logout]").first();
         assertThat(logoutButton.text(), is("Logout"));
 
@@ -41,21 +40,31 @@ public class NavBarTest {
     }
 
     @Test
+    public void onlyShowsCatButtonWhenLoggedIn() throws Exception {
+        Element catLinkWhenLoggedIn = loggedInDocument.select("#the-cat a").first();
+        assertThat(catLinkWhenLoggedIn.attr("href"), is("/cat"));
+
+        Element catLinkWhenLoggedOut = parse(loggedOutView()).select("#the-cat a").first();
+        assertThat(catLinkWhenLoggedOut, is(nullValue()));
+    }
+
+    @Test
     public void hasProperBrand() {
         assertThat(loggedInDocument.select(".navbar-brand").first().text(), is("A cat named Nyan"));
     }
 
-    private Map<String, Object> loggedOutView() {
-        return someViewContext(false);
+    private String loggedOutView() throws Exception {
+        return someView(false);
     }
 
-    private Map<String, Object> loggedInView() {
-        return someViewContext(true);
+    private String loggedInView() throws Exception {
+        return someView(true);
     }
 
-    private Map<String, Object> someViewContext(boolean userIsLoggedIn) {
+    private String someView(boolean userIsLoggedIn) throws Exception {
         Map<String, Object> viewContext = new HashMap<>();
         viewContext.put("user-is-logged-in", userIsLoggedIn);
-        return viewContext;
+
+        return aRenderer().render("/templates/partials/nav-bar", viewContext);
     }
 }

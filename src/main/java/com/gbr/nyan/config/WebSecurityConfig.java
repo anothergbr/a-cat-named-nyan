@@ -15,7 +15,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        noSecurityAtAll(http);
+        onlyTheCatPageIsSecured(http);
         noCsrfNeither(http);
         allowFrames(http);
         enableOpenIdLogin(http);
@@ -43,7 +43,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
     }
 
-    private void noSecurityAtAll(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().permitAll();
+    private void onlyTheCatPageIsSecured(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/cat/**").hasRole("USER")
+                .anyRequest().permitAll();
     }
 }

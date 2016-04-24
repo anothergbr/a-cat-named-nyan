@@ -14,16 +14,16 @@ import static com.gbr.nyan.support.HandlebarsRenderer.aRenderer;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class RepoListViewTest {
+public class CatViewTest {
     private Document document;
 
     @Before
     public void thisView() throws Exception {
         Map<String, Object> viewContext = new HashMap<>();
-        viewContext.put("page-title", "some-title");
-        viewContext.put("rendering-repo-list", true);
+        viewContext.put("page-title", "The cat title");
+        viewContext.put("rendering-cat-page", true);
 
-        document = Jsoup.parse(aRenderer().render("/templates/repo-list", viewContext));
+        document = Jsoup.parse(aRenderer().render("/templates/cat", viewContext));
     }
 
     @Test
@@ -33,15 +33,12 @@ public class RepoListViewTest {
 
     @Test
     public void hasProperTitle() {
-        assertThat(document.title(), is("some-title"));
+        assertThat(document.title(), is("The cat title"));
     }
 
     @Test
-    public void repoListItemIsActiveInNavbar() {
+    public void catItemIsActiveInNavbar() {
         Element activeElement = document.select("#navbar li.active").first();
-        assertThat(activeElement.text(), is("Content of the repositories"));
-
-        Element anchor = activeElement.select("a").first();
-        assertThat(anchor.hasAttr("href"), is(false));
+        assertThat(activeElement.id(), is("the-cat"));
     }
 }
