@@ -19,18 +19,18 @@ import static org.springframework.http.HttpStatus.OK;
 public class CanShowRepoList {
     @Autowired
     private TestRestTemplate httpClient;
-    private ResponseEntity<String> repoListResponse;
+    private ResponseEntity<String> response;
 
     @Before
     public void thisPage() {
-        repoListResponse = httpClient.getForEntity("/repo-list", String.class);
+        response = httpClient.getForEntity("/repo-list", String.class);
     }
 
     @Test
     public void returnsOkAndUtf8Html() throws Exception {
-        String contentType = repoListResponse.getHeaders().getContentType().toString();
+        String contentType = response.getHeaders().getContentType().toString();
 
-        assertThat(repoListResponse.getStatusCode(), is(OK));
+        assertThat(response.getStatusCode(), is(OK));
         assertThat(contentType, is("text/html;charset=UTF-8"));
     }
 }

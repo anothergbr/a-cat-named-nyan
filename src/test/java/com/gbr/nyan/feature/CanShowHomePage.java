@@ -19,17 +19,17 @@ import static org.springframework.http.HttpStatus.OK;
 public class CanShowHomePage {
     @Autowired
     private TestRestTemplate httpClient;
-    private ResponseEntity<String> rootResponse;
+    private ResponseEntity<String> response;
 
     @Before
     public void thisPage() {
-        rootResponse = httpClient.getForEntity("/", String.class);
+        response = httpClient.getForEntity("/", String.class);
     }
 
     @Test
     public void returnsOkAndUtf8Html() throws Exception {
-        String contentType = rootResponse.getHeaders().getContentType().toString();
-        assertThat(rootResponse.getStatusCode(), is(OK));
+        String contentType = response.getHeaders().getContentType().toString();
+        assertThat(response.getStatusCode(), is(OK));
         assertThat(contentType, is("text/html;charset=UTF-8"));
     }
 }
