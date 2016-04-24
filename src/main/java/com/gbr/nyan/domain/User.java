@@ -3,7 +3,7 @@ package com.gbr.nyan.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name="nyan_user")
+@Table(name="NUSER")
 public class User extends UserBasicHardcodedSpringSecurityStuff {
     private final static long serialVersionUID = -1;
 
