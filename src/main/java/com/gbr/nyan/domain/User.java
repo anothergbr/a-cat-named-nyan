@@ -1,11 +1,9 @@
 package com.gbr.nyan.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name="nyan_user")
 public class User extends UserBasicHardcodedSpringSecurityStuff {
     private final static long serialVersionUID = -1;
 
