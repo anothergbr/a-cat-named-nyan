@@ -9,13 +9,13 @@
     <logger name="org.apache.catalina" level="WARN"/>
     <logger name="org.apache.tomcat" level="WARN"/>
     <logger name="org.apache.http" level="WARN"/>
-    <!--<logger name="org.hibernate" level="WARN"/>-->
-    <!--<logger name="org.springframework" level="WARN"/>-->
+    <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.springframework" level="WARN"/>
     <logger name="com.gbr.nyan.web.support.FullRequestLogFilter" level="WARN"/>
 
     <logger name="org.springframework.security" level="INFO"/>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
