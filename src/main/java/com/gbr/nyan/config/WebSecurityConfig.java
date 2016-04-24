@@ -18,12 +18,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         noSecurityAtAll(http);
         noCsrfNeither(http);
         allowFrames(http);
-        enableLoginWithAppDirectOpenId(http);
+        enableOpenIdLogin(http);
     }
 
-    private void enableLoginWithAppDirectOpenId(HttpSecurity http) throws Exception {
+    private void enableOpenIdLogin(HttpSecurity http) throws Exception {
         http.openidLogin()
                 .loginPage("/login")
+                .failureUrl("/login?error=true")
                 .authenticationUserDetailsService(openIdUserDetailsService)
                 .attributeExchange(".*.byappdirect.com.*")
                 .attribute("uuid").type("https://www.appdirect.com/schema/user/uuid").required(true)
@@ -31,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .attribute("email").type("http://axschema.org/contact/email").required(true)
                 .and()
                 .attribute("fullname").type("http://axschema.org/namePerson").required(true);
+        http.logout().logoutSuccessUrl("/login?logout=true");
     }
 
     private void allowFrames(HttpSecurity http) throws Exception {

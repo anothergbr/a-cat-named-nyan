@@ -1,6 +1,5 @@
 package com.gbr.nyan.view;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.Before;
@@ -11,8 +10,9 @@ import java.util.Map;
 
 import static com.gbr.nyan.support.EveryViews.shouldIncludeBootstrap;
 import static com.gbr.nyan.support.HandlebarsRenderer.aRenderer;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
+import static java.util.Collections.singletonMap;
+import static org.hamcrest.Matchers.*;
+import static org.jsoup.Jsoup.parse;
 import static org.junit.Assert.assertThat;
 
 public class LoginViewTest {
@@ -22,9 +22,11 @@ public class LoginViewTest {
     public void thisView() throws Exception {
         Map<String, Object> viewContext = new HashMap<>();
         viewContext.put("page-title", "The login");
-        viewContext.put("rendering-login-page", "true");
+        viewContext.put("rendering-login-page", true);
+        viewContext.put("show-error", false);
+        viewContext.put("show-logout-success", false);
 
-        document = Jsoup.parse(aRenderer().render("/templates/login", viewContext));
+        document = parse(aRenderer().render("/templates/login", viewContext));
     }
 
     @Test
@@ -58,5 +60,21 @@ public class LoginViewTest {
 
         Element submitLabel = openIdForm.select("label[for=submit]").first();
         assertThat(submitLabel.text(), is("log in with"));
+    }
+
+    @Test
+    public void showsErrorMessageWhenToldTo() throws Exception {
+        document = parse(aRenderer().render("/templates/login", singletonMap("show-error", true)));
+
+        Element errorRow = document.select("#error-row").first();
+        assertThat(errorRow.text(), startsWith("Could not log you in"));
+    }
+
+    @Test
+    public void showsLogoutSuccessfulWhenToldTo() throws Exception {
+        document = parse(aRenderer().render("/templates/login", singletonMap("show-logout-success", true)));
+
+        Element logoutSuccessRow = document.select("#logout-success-row").first();
+        assertThat(logoutSuccessRow.text(), startsWith("Successfully logged you out"));
     }
 }
