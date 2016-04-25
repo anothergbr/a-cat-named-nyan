@@ -28,8 +28,13 @@ public class FakeAppDirect {
     }
 
     public FakeAppDirect start() {
-        server.createContext("/v1/events/dummyOrder", new SecuredReturnJson("events/subscription-order-stateless.json"));
-        server.createContext("/v1/events/dev-order", new SecuredReturnJson("events/subscription-order-development.json"));
+        server.createContext("/v1/events/dummyOrder", new OauthSecuredJson("events/subscription-order-stateless.json"));
+        server.createContext("/v1/events/dummyChange", new OauthSecuredJson("events/subscription-change-stateless.json"));
+        server.createContext("/v1/events/dummyCancel", new OauthSecuredJson("events/subscription-cancel-stateless.json"));
+        server.createContext("/v1/events/dummyNotice", new OauthSecuredJson("events/subscription-notice-stateless.json"));
+
+        server.createContext("/v1/events/dev-order", new OauthSecuredJson("events/subscription-order-development.json"));
+        server.createContext("/v1/events/dev-cancel", new OauthSecuredJson("events/subscription-cancel-development.json"));
 
         server.start();
         return this;
@@ -43,10 +48,10 @@ public class FakeAppDirect {
         return lastRequestPath;
     }
 
-    private class SecuredReturnJson implements HttpHandler {
+    private class OauthSecuredJson implements HttpHandler {
         private final String jsonResource;
 
-        private SecuredReturnJson(String jsonResource) {
+        private OauthSecuredJson(String jsonResource) {
             this.jsonResource = jsonResource;
         }
 

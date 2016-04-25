@@ -1,0 +1,29 @@
+{
+  "type": "SUBSCRIPTION_NOTICE",
+  "marketplace": {
+    "partner": "ACME",
+    "baseUrl": "https://acme.appdirect.com"
+  },
+  "applicationUuid": null,
+  "flag": "STATELESS",
+  "creator": null,
+  "payload": {
+    "user": null,
+    "company": null,
+    "account": {
+      "accountIdentifier": "dummy-account",
+      "status": "SUSPENDED",
+      "parentAccountIdentifier": null
+    },
+    "addonInstance": null,
+    "addonBinding": null,
+    "order": null,
+    "notice": {
+      "type": "DEACTIVATED",
+      "message": null
+    },
+    "configuration": {}
+  },
+  "returnUrl": null,
+  "links": []
+}
