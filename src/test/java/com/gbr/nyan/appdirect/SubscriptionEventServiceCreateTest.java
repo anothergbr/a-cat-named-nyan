@@ -15,11 +15,12 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
-public class SubscriptionEventServiceTest {
+public class SubscriptionEventServiceCreateTest {
     private AccountExtractor accountExtractor;
     private AccountRepository accountRepository;
     private EventUserExtractor eventUserExtractor;
     private UserRepository userRepository;
+
     private SubscriptionEventService service;
 
     @Before
@@ -36,7 +37,7 @@ public class SubscriptionEventServiceTest {
     }
 
     @Test
-    public void returnsUnknownErrorWhenStatelessEventIsCreated() {
+    public void returnsUnknownErrorWhenStatelessCreateEventOccurs() {
         SubscriptionEvent statelessEvent = someStatelessEvent().build();
 
         SubscriptionResponse response = service.create(statelessEvent);

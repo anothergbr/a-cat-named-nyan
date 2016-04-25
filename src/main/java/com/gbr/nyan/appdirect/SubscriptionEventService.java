@@ -44,7 +44,14 @@ public class SubscriptionEventService {
     }
 
     public SubscriptionResponse change(SubscriptionEvent changeEvent) {
-        return failure().withErrorCode("UNKNOWN_ERROR");
+        if (changeEvent.getFlag() == STATELESS) {
+            return failure().withErrorCode("UNKNOWN_ERROR");
+        }
+
+        Account existingAccountWithNewEdition = accountExtractor.fromChangeEvent(changeEvent);
+        accountRepository.save(existingAccountWithNewEdition);
+
+        return success();
     }
 
     public SubscriptionResponse cancel(SubscriptionEvent cancelEvent) {

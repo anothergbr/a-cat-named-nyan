@@ -16,6 +16,11 @@ public class AccountExtractor {
         return account;
     }
 
+    public Account fromChangeEvent(SubscriptionEvent changeEvent) {
+        return null;
+
+    }
+
     private Edition editionFrom(SubscriptionEvent event) {
         Optional<Order> order = event.getPayload().getOrder();
         return order.map(Order::getEditionCode).orElse(null);
