@@ -78,6 +78,15 @@ public class UserRepositoryTest {
         assertThat(notFoundUser, is(nullValue()));
     }
 
+    @Test
+    public void findsAllUsersByAccount() throws Exception {
+        Account anotherAccount = aSavedAccount();
+        repository.save(asList(aNewUser("test@email.ca", existingAccount, "Richard Y"), aNewUser("other@email.jp", anotherAccount, "Stephanie Z"), aNewUser("xy@z.jp", anotherAccount, "Charles K")));
+
+        List<User> retrievedUsers = toList(repository.findAllByAccount(anotherAccount));
+        assertThat(retrievedUsers.size(), is(2));
+    }
+
     private User aNewUser(String email, Account account, String fullName) {
         User newUser = new User();
         newUser.setEmail(email);
