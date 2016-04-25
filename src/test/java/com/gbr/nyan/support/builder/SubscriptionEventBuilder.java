@@ -10,6 +10,7 @@ public class SubscriptionEventBuilder {
     private Flag flag;
     private Edition edition = BASIC;
     private EventUser creator;
+    private String accountIdentifier;
 
     public static SubscriptionEventBuilder someEvent() {
         return new SubscriptionEventBuilder();
@@ -29,6 +30,16 @@ public class SubscriptionEventBuilder {
         return this;
     }
 
+    public SubscriptionEventBuilder withAccountIdentifier(String accountIdentifier) {
+        this.accountIdentifier = accountIdentifier;
+        return this;
+    }
+
+    public SubscriptionEventBuilder withCreator(SubscriptionUserBuilder userBuilder) {
+        this.creator = userBuilder.build();
+        return this;
+    }
+
     public SubscriptionEvent build() {
         SubscriptionEvent subscriptionEvent = new SubscriptionEvent();
         subscriptionEvent.setCreator(creator);
@@ -41,6 +52,7 @@ public class SubscriptionEventBuilder {
     private Payload buildPayload() {
         Payload payload = new Payload();
         payload.setOrder(buildOrder());
+        payload.setAccount(buildAccount());
 
         return payload;
     }
@@ -52,8 +64,10 @@ public class SubscriptionEventBuilder {
         return order;
     }
 
-    public SubscriptionEventBuilder withCreator(SubscriptionUserBuilder userBuilder) {
-        this.creator = userBuilder.build();
-        return this;
+    private SubscriptionAccount buildAccount() {
+        SubscriptionAccount account = new SubscriptionAccount();
+        account.setAccountIdentifier(accountIdentifier);
+
+        return account;
     }
 }

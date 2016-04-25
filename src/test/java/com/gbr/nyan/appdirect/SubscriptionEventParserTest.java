@@ -21,7 +21,7 @@ public class SubscriptionEventParserTest {
     }
 
     @Test
-    public void canReadCompleteSubscriptionOrder() throws Exception {
+    public void canReadCommonFields() throws Exception {
         String json = resourceAsString("events/subscription-order-development.json");
         SubscriptionEvent subscriptionEvent = parser.fromJson(json);
 
@@ -33,6 +33,14 @@ public class SubscriptionEventParserTest {
         assertThat(subscriptionEvent.getCreator().get().getLastName(), is("SomeLastName"));
         assertThat(subscriptionEvent.getPayload().getCompany().getName(), is("Gabriel's Company"));
         assertThat(subscriptionEvent.getPayload().getOrder().get().getEditionCode(), is(BASIC));
+    }
+
+    @Test
+    public void canReadPayloadAccount() throws Exception {
+        String json = resourceAsString("events/subscription-change-stateless.json");
+        SubscriptionEvent subscriptionEvent = parser.fromJson(json);
+
+        assertThat(subscriptionEvent.getPayload().getAccount().get().getAccountIdentifier(), is("dummy-account"));
     }
 
     @Test
