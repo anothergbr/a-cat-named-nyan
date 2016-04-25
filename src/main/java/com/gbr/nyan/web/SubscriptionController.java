@@ -42,6 +42,11 @@ public class SubscriptionController {
         return getEventAndProcessIt(eventUrl, subscriptionEventService::change);
     }
 
+    @RequestMapping(value = "/subscription/cancel/notification", method = GET, consumes = "*", produces = "application/json")
+    public ResponseEntity<SubscriptionResponse> cancel(@RequestParam Optional<String> eventUrl) throws Exception {
+        return getEventAndProcessIt(eventUrl, subscriptionEventService::cancel);
+    }
+
     private ResponseEntity<SubscriptionResponse> getEventAndProcessIt(Optional<String> eventUrl, Function<SubscriptionEvent, SubscriptionResponse> processor) throws Exception {
         if (!eventUrl.isPresent()) {
             return badRequest().body(failure().withErrorCode("INVALID_RESPONSE"));

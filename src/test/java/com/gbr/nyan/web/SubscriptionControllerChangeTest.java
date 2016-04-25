@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.Optional;
 
 import static com.gbr.nyan.appdirect.entity.SubscriptionResponse.success;
+import static java.util.Optional.of;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
@@ -44,7 +45,7 @@ public class SubscriptionControllerChangeTest {
 
     @Test
     public void fetchesTheEventUrl() throws Exception {
-        controller.change(Optional.of("http://some-event-url"));
+        controller.change(of("http://some-event-url"));
 
         verify(httpClient).get("http://some-event-url");
     }
@@ -53,7 +54,7 @@ public class SubscriptionControllerChangeTest {
     public void parsesTheEvent() throws Exception {
         when(httpClient.get("http://some-event-url")).thenReturn("some-json");
 
-        controller.change(Optional.of("http://some-event-url"));
+        controller.change(of("http://some-event-url"));
 
         verify(eventParser).fromJson("some-json");
     }
@@ -63,7 +64,7 @@ public class SubscriptionControllerChangeTest {
         SubscriptionEvent someEvent = new SubscriptionEvent();
         when(eventParser.fromJson(anyString())).thenReturn(someEvent);
 
-        controller.change(Optional.of("http://some-event-url"));
+        controller.change(of("http://some-event-url"));
 
         verify(subscriptionEventService).change(someEvent);
     }
@@ -72,7 +73,7 @@ public class SubscriptionControllerChangeTest {
     public void returnsTheServiceResponseWrappedInHttpOk() throws Exception {
         when(subscriptionEventService.change(any())).thenReturn(success());
 
-        ResponseEntity<SubscriptionResponse> response = controller.change(Optional.of("http://some-event-url"));
+        ResponseEntity<SubscriptionResponse> response = controller.change(of("http://some-event-url"));
 
         assertThat(response.getStatusCode(), is(OK));
         assertThat(response.getBody().getSuccess(), is("true"));

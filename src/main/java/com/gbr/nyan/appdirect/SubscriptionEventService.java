@@ -46,4 +46,8 @@ public class SubscriptionEventService {
     public SubscriptionResponse change(SubscriptionEvent changeEvent) {
         return failure().withErrorCode("UNKNOWN_ERROR");
     }
+
+    public SubscriptionResponse cancel(SubscriptionEvent cancelEvent) {
+        return failure().withErrorCode("UNKNOWN_ERROR");
+    }
 }
