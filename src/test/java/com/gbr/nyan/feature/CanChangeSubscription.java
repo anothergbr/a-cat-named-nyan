@@ -43,8 +43,8 @@ public class CanChangeSubscription {
 
     @Before
     public void setup() throws Exception {
-        accountRepository.deleteAll();
         userRepository.deleteAll();
+        accountRepository.deleteAll();
 
         fakeAppDirect = FakeAppDirect.create(42534).start();
     }
