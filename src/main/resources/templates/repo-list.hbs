@@ -4,37 +4,55 @@
 {{> templates/partials/nav-bar }}
 
 <div class="container">
-    <h2>All users in the system</h2>
-    <table id="users" class="table table-striped">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>AppDirect's UUID</th>
-            <th>OpenId Url</th>
-            <th>Account Id</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#users}}
+    {{#if user-can-be-upgraded}}
+        <div class="row">
+            <h2>Upgrade me</h2>
+            <a href="/repo-list?upgradeMe" class="btn btn-warning btn-lg">Give me an active subscription!</a>
+            <hr>
+        </div>
+    {{/if}}
+
+    <div class="row">
+        <h2>All users in the system</h2>
+        <table id="users" class="table table-striped">
+            <thead>
             <tr>
-                <th scope=row>{{id}}</th>
-                <td>{{fullName}}</td>
-                <td>{{email}}</td>
-                <td>{{uuid}}</td>
-                <td>{{openIdUrl}}</td>
-                <td>
-                    {{#if account}}
-                        {{account.id}}
-                    {{else}}
-                        <span class="label label-warning">N/A</span>
-                    {{/if}}
-                </td>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>AppDirect's UUID</th>
+                <th>OpenId Url</th>
+                <th>Account Id</th>
+                <th>Edition</th>
             </tr>
-        {{/users}}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {{#users}}
+                <tr>
+                    <th scope=row>{{id}}</th>
+                    <td>{{fullName}}</td>
+                    <td>{{email}}</td>
+                    <td>{{uuid}}</td>
+                    <td>{{openIdUrl}}</td>
+                    <td>
+                        {{#if account}}
+                            {{account.id}}
+                        {{else}}
+                            <span class="label label-warning">N/A</span>
+                        {{/if}}
+                    </td>
+                    <td>
+                        {{#if account}}
+                            <span class="label label-info">{{account.edition}}</span>
+                        {{else}}
+                            <span class="label label-warning">N/A</span>
+                        {{/if}}
+                    </td>
+                </tr>
+            {{/users}}
+            </tbody>
+        </table>
+    </div>
 
     <hr>
 

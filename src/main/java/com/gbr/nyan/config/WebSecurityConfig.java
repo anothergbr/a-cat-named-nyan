@@ -25,6 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.openidLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/cat")
                 .authenticationUserDetailsService(openIdUserDetailsService)
                 .attributeExchange(".*.byappdirect.com.*")
                 .attribute("uuid").type("https://www.appdirect.com/schema/user/uuid").required(true)

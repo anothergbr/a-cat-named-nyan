@@ -6,9 +6,10 @@
 
 <div class="container">
     {{#if user-has-active-subscription}}
-        <h1>Thank you for buying</h1>
-        <p>TODO: show nyan cat embed only if active account is shown
-        </p>
+        <h1>Thank you for buying!</h1>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="http://www.nyan.cat/nyancoin"></iframe>
+        </div>
     {{else}}
         <div id="subscription-required-row" class="row bigTopMargin">
             <div class="col-md-2"></div>
