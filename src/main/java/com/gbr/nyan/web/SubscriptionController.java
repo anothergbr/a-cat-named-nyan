@@ -15,7 +15,6 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import static com.gbr.nyan.appdirect.entity.SubscriptionResponse.failure;
-import static com.gbr.nyan.appdirect.entity.SubscriptionResponse.success;
 import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -45,12 +44,7 @@ public class SubscriptionController {
 
     @RequestMapping(value = "/subscription/cancel/notification", method = GET, consumes = "*", produces = "application/json")
     public ResponseEntity<SubscriptionResponse> cancel(@RequestParam Optional<String> eventUrl) throws Exception {
-        return getEventAndProcessIt(eventUrl, e -> {
-            if (e != null && e.getPayload() != null && e.getPayload().getAccount().get().getAccountIdentifier().equals("some-id")) {
-                return success(); // HACK just to properly flush state on the dev console
-            }
-            return subscriptionEventService.cancel(e);
-        });
+        return getEventAndProcessIt(eventUrl, subscriptionEventService::cancel);
     }
 
     private ResponseEntity<SubscriptionResponse> getEventAndProcessIt(Optional<String> eventUrl, Function<SubscriptionEvent, SubscriptionResponse> processor) throws Exception {
