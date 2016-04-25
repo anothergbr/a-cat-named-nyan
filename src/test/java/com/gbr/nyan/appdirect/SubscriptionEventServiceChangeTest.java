@@ -4,7 +4,6 @@ import com.gbr.nyan.appdirect.entity.SubscriptionEvent;
 import com.gbr.nyan.appdirect.entity.SubscriptionResponse;
 import com.gbr.nyan.domain.Account;
 import com.gbr.nyan.domain.AccountRepository;
-import com.gbr.nyan.domain.User;
 import com.gbr.nyan.domain.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,10 +52,8 @@ public class SubscriptionEventServiceChangeTest {
     }
 
     private Account someAccount(String id) {
-        return new Account(id);
-    }
-
-    private User someUser() {
-        return new User();
+        Account account = new Account();
+        account.setId(id);
+        return account;
     }
 }
