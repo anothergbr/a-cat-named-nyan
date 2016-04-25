@@ -9,7 +9,6 @@ import java.util.Map;
 
 import static com.gbr.nyan.web.support.SecurityContextHelper.userNotLoggedIn;
 import static java.util.Optional.empty;
-import static java.util.Optional.of;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyObject;
@@ -32,21 +31,20 @@ public class LoginControllerTest {
 
     @Test
     public void passesTheContextToTheViewRenderer() throws Exception {
-        controller.login(empty(), of(true));
+        controller.login(empty());
 
         Map<String, Object> expectedContext = new HashMap<>();
         expectedContext.put("page-title", "A cat named Nyan - login");
         expectedContext.put("rendering-login-page", true);
         expectedContext.put("user-is-logged-in", false);
         expectedContext.put("show-error", false);
-        expectedContext.put("show-logout-success", true);
 
         verify(viewRenderer).render("/templates/login", expectedContext);
     }
 
     @Test
     public void returnsTheViewResults() throws Exception {
-        String responseBody = controller.login(empty(), empty());
+        String responseBody = controller.login(empty());
 
         assertThat(responseBody, is("the body"));
     }

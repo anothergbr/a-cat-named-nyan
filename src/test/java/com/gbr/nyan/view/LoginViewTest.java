@@ -70,12 +70,4 @@ public class LoginViewTest {
         Element errorRow = document.select("#error-row").first();
         assertThat(errorRow.text(), startsWith("Could not log you in"));
     }
-
-    @Test
-    public void showsLogoutSuccessfulWhenToldTo() throws Exception {
-        document = parse(aRenderer().render("/templates/login", singletonMap("show-logout-success", true)));
-
-        Element logoutSuccessRow = document.select("#logout-success-row").first();
-        assertThat(logoutSuccessRow.text(), startsWith("Successfully logged you out"));
-    }
 }

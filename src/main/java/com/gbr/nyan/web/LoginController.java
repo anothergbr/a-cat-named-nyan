@@ -26,13 +26,12 @@ class LoginController {
 
     @ResponseBody
     @RequestMapping(value = "/login", method = GET, produces = "text/html")
-    public String login(@RequestParam Optional<Boolean> error, @RequestParam Optional<Boolean> logout) throws IOException {
+    public String login(@RequestParam Optional<Boolean> error) throws IOException {
         Map<String, Object> viewContext = new HashMap<>();
         viewContext.put("page-title", "A cat named Nyan - login");
         viewContext.put("rendering-login-page", true);
         viewContext.put("user-is-logged-in", userIsLoggedIn());
         viewContext.put("show-error", error.isPresent());
-        viewContext.put("show-logout-success", logout.isPresent());
 
         return viewRenderer.render("/templates/login", viewContext);
     }
