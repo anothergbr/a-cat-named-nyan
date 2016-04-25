@@ -57,7 +57,7 @@ public class LoginViewTest {
 
         Element hiddenOpenId = openIdForm.select("input[name=openid_identifier]").first();
         assertThat(hiddenOpenId.attr("type"), is("hidden"));
-        assertThat(hiddenOpenId.val(), is("https://gabrielspub.byappdirect.com/openid/id"));
+        assertThat(hiddenOpenId.val(), is("https://gabrielspub-test.byappdirect.com/openid/id"));
 
         Element submitLabel = openIdForm.select("label[for=submit]").first();
         assertThat(submitLabel.text(), is("log in with"));
