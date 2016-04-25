@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
 
-public class SubscriptionControllerTest {
+public class SubscriptionControllerChangeTest {
     private SubscriptionController controller;
     private HttpClient httpClient;
     private SubscriptionEventParser eventParser;
@@ -35,7 +35,7 @@ public class SubscriptionControllerTest {
 
     @Test
     public void failsWhenNoEventUrlIsPassed() throws Exception {
-        ResponseEntity<SubscriptionResponse> response = controller.create(Optional.empty());
+        ResponseEntity<SubscriptionResponse> response = controller.change(Optional.empty());
 
         assertThat(response.getStatusCode(), is(BAD_REQUEST));
         assertThat(response.getBody().getSuccess(), is("false"));
@@ -44,7 +44,7 @@ public class SubscriptionControllerTest {
 
     @Test
     public void fetchesTheEventUrl() throws Exception {
-        controller.create(Optional.of("http://some-event-url"));
+        controller.change(Optional.of("http://some-event-url"));
 
         verify(httpClient).get("http://some-event-url");
     }
@@ -53,7 +53,7 @@ public class SubscriptionControllerTest {
     public void parsesTheEvent() throws Exception {
         when(httpClient.get("http://some-event-url")).thenReturn("some-json");
 
-        controller.create(Optional.of("http://some-event-url"));
+        controller.change(Optional.of("http://some-event-url"));
 
         verify(eventParser).fromJson("some-json");
     }
@@ -63,19 +63,18 @@ public class SubscriptionControllerTest {
         SubscriptionEvent someEvent = new SubscriptionEvent();
         when(eventParser.fromJson(anyString())).thenReturn(someEvent);
 
-        controller.create(Optional.of("http://some-event-url"));
+        controller.change(Optional.of("http://some-event-url"));
 
-        verify(subscriptionEventService).create(someEvent);
+        verify(subscriptionEventService).change(someEvent);
     }
 
     @Test
     public void returnsTheServiceResponseWrappedInHttpOk() throws Exception {
-        when(subscriptionEventService.create(any())).thenReturn(success().withAccountIdentifier("some-new-id"));
+        when(subscriptionEventService.change(any())).thenReturn(success());
 
-        ResponseEntity<SubscriptionResponse> response = controller.create(Optional.of("http://some-event-url"));
+        ResponseEntity<SubscriptionResponse> response = controller.change(Optional.of("http://some-event-url"));
 
         assertThat(response.getStatusCode(), is(OK));
         assertThat(response.getBody().getSuccess(), is("true"));
-        assertThat(response.getBody().getAccountIdentifier(), is("some-new-id"));
     }
 }

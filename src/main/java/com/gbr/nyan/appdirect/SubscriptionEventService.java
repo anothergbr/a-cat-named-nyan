@@ -42,4 +42,8 @@ public class SubscriptionEventService {
 
         return success().withAccountIdentifier(newAccount.getId());
     }
+
+    public SubscriptionResponse change(SubscriptionEvent changeEvent) {
+        return failure().withErrorCode("UNKNOWN_ERROR");
+    }
 }
