@@ -17,15 +17,15 @@ public class AccountExtractor {
         return account;
     }
 
-    public Account fromChangeEvent(SubscriptionEvent changeEvent) {
-        Optional<SubscriptionAccount> subscriptionAccount = changeEvent.getPayload().getAccount();
+    public Account whenAccountExists(SubscriptionEvent event) {
+        Optional<SubscriptionAccount> subscriptionAccount = event.getPayload().getAccount();
         if (!subscriptionAccount.isPresent()) {
-            throw new IllegalArgumentException("Change event does not have a Payload.order object. Not supported");
+            throw new IllegalArgumentException("Event does not have a Payload.order object. The account is assumed to exist.");
         }
 
-        Account account = fromEvent(changeEvent);
+        Account account = fromEvent(event);
         account.setId(subscriptionAccount.get().getAccountIdentifier());
-        account.setEdition(editionFrom(changeEvent));
+        account.setEdition(editionFrom(event));
 
         return account;
     }

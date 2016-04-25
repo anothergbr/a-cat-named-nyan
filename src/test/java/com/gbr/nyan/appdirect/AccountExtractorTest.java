@@ -26,16 +26,16 @@ public class AccountExtractorTest {
     }
 
     @Test
-    public void setsAccountIdForChangeEvents() throws Exception {
-        Account account = extractor.fromChangeEvent(someEvent().withAccountIdentifier("the-account-id").build());
+    public void setsAccountIdWhenAccountIsKnownToExist() throws Exception {
+        Account account = extractor.whenAccountExists(someEvent().withAccountIdentifier("the-account-id").build());
         assertThat(account.getId(), is("the-account-id"));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void throwsIfAccountIsMissingInChangeEvents() throws Exception {
+    public void throwsIfAccountIsMissingWhenItShouldExist() throws Exception {
         SubscriptionEvent eventMissingAccount = someEvent().build();
         eventMissingAccount.getPayload().setAccount(null);
 
-        extractor.fromChangeEvent(eventMissingAccount);
+        extractor.whenAccountExists(eventMissingAccount);
     }
 }

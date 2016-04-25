@@ -6,4 +6,6 @@ public interface UserRepository extends CrudRepository<User, String> {
     User findByOpenIdUrl(String openIdUrl);
 
     User findByEmail(String email);
+
+    Iterable<User> findAllByAccount(Account account);
 }

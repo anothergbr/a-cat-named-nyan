@@ -48,13 +48,25 @@ public class SubscriptionEventService {
             return failure().withErrorCode("UNKNOWN_ERROR");
         }
 
-        Account existingAccountWithNewEdition = accountExtractor.fromChangeEvent(changeEvent);
+        Account existingAccountWithNewEdition = accountExtractor.whenAccountExists(changeEvent);
         accountRepository.save(existingAccountWithNewEdition);
 
         return success();
     }
 
     public SubscriptionResponse cancel(SubscriptionEvent cancelEvent) {
-        return failure().withErrorCode("UNKNOWN_ERROR");
+        if (cancelEvent.getFlag() == STATELESS) {
+            return failure().withErrorCode("UNKNOWN_ERROR");
+        }
+
+        Account accountToDelete = accountExtractor.whenAccountExists(cancelEvent);
+
+        Iterable<User> allUsersInThisAccount = userRepository.findAllByAccount(accountToDelete);
+        allUsersInThisAccount.forEach(u -> u.setAccount(null));
+        userRepository.save(allUsersInThisAccount);
+
+        accountRepository.delete(accountToDelete.getId());
+
+        return success();
     }
 }

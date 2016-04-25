@@ -7,8 +7,10 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.net.URI;
 
 import static com.gbr.nyan.support.ContentOf.resourceAsBytes;
+import static com.gbr.nyan.support.ContentOf.resourceAsString;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
@@ -67,7 +69,9 @@ public class FakeAppDirect {
 
             t.getResponseHeaders().add("Content-Type", "application/json");
 
-            byte[] response = resourceAsBytes(jsonResource);
+            String accountId = getOptionalAccountIdParam(t.getRequestURI());
+            byte[] response = accountId == null ? resourceAsBytes(jsonResource) : resourceAsString(jsonResource).replace("{{account-id}}", accountId).getBytes(UTF_8);
+
             sendResponse(t, 200, response);
         }
 
@@ -77,6 +81,14 @@ public class FakeAppDirect {
             OutputStream os = t.getResponseBody();
             os.write(response);
             os.close();
+        }
+
+        private String getOptionalAccountIdParam(URI requestURI) {
+            String query = requestURI.getQuery();
+            if (query == null || !query.startsWith("account-id")) {
+                return null;
+            }
+            return query.split("=")[1];
         }
     }
 }

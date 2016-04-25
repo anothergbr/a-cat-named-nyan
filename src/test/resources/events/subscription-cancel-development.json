@@ -20,7 +20,7 @@
     "user": null,
     "company": null,
     "account": {
-      "accountIdentifier": "some-id",
+      "accountIdentifier": "{{account-id}}",
       "status": "ACTIVE",
       "parentAccountIdentifier": null
     },

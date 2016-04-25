@@ -36,8 +36,6 @@ public class Account {
         return edition;
     }
 
-
-
     public enum Edition {
         PREMIUM, BASIC
     }
