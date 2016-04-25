@@ -1,11 +1,13 @@
 package com.gbr.nyan.appdirect.entity;
 
+import java.util.Optional;
+
 public class Payload {
-    private User user;
+    private EventUser user;
     private Company company;
     private Order order;
 
-    public User getUser() {
+    public EventUser getUser() {
         return user;
     }
 
@@ -13,7 +15,11 @@ public class Payload {
         return company;
     }
 
-    public Order getOrder() {
-        return order;
+    public Optional<Order> getOrder() {
+        return Optional.ofNullable(order);
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

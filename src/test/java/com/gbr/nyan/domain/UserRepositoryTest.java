@@ -12,8 +12,7 @@ import java.util.List;
 import static com.gbr.nyan.domain.Account.Edition.PREMIUM;
 import static com.gbr.nyan.support.Iterables.toList;
 import static java.util.Arrays.asList;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -64,6 +63,19 @@ public class UserRepositoryTest {
         User retrievedUser = repository.findByOpenIdUrl("12345@openid.com");
 
         assertThat(retrievedUser.getFullName(), is("Hopen Highdee"));
+    }
+
+    @Test
+    public void findsUserByEmail() throws Exception {
+        User aNewUser = aNewUser("x@z.com", existingAccount, "some name");
+
+        repository.save(aNewUser);
+
+        User retrievedUser = repository.findByEmail("x@z.com");
+        assertThat(retrievedUser.getFullName(), is("some name"));
+
+        User notFoundUser = repository.findByEmail("unknown@email.com");
+        assertThat(notFoundUser, is(nullValue()));
     }
 
     private User aNewUser(String email, Account account, String fullName) {

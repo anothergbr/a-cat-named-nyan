@@ -26,13 +26,13 @@ public class SubscriptionEventParserTest {
         SubscriptionEvent subscriptionEvent = parser.fromJson(json);
 
         assertThat(subscriptionEvent.getFlag(), is(DEVELOPMENT));
-        assertThat(subscriptionEvent.getCreator().getUuid(), is("dac5f67b-7da7-4603-bb1b-3fd507509081"));
-        assertThat(subscriptionEvent.getCreator().getOpenId(), is("https://gabrielspub-test.byappdirect.com/openid/id/dac5f67b-7da7-4603-bb1b-3fd507509081"));
-        assertThat(subscriptionEvent.getCreator().getEmail(), is("gabriel.x@gmail.com"));
-        assertThat(subscriptionEvent.getCreator().getFirstName(), is("Gabriel"));
-        assertThat(subscriptionEvent.getCreator().getLastName(), is("SomeLastName"));
+        assertThat(subscriptionEvent.getCreator().get().getUuid(), is("dac5f67b-7da7-4603-bb1b-3fd507509081"));
+        assertThat(subscriptionEvent.getCreator().get().getOpenId(), is("https://gabrielspub-test.byappdirect.com/openid/id/dac5f67b-7da7-4603-bb1b-3fd507509081"));
+        assertThat(subscriptionEvent.getCreator().get().getEmail(), is("gabriel.x@gmail.com"));
+        assertThat(subscriptionEvent.getCreator().get().getFirstName(), is("Gabriel"));
+        assertThat(subscriptionEvent.getCreator().get().getLastName(), is("SomeLastName"));
         assertThat(subscriptionEvent.getPayload().getCompany().getName(), is("Gabriel's Company"));
-        assertThat(subscriptionEvent.getPayload().getOrder().getEditionCode(), is(BASIC));
+        assertThat(subscriptionEvent.getPayload().getOrder().get().getEditionCode(), is(BASIC));
     }
 
     @Test

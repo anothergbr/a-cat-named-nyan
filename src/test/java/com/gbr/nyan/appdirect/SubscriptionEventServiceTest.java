@@ -30,7 +30,7 @@ public class SubscriptionEventServiceTest {
         userRepository = mock(UserRepository.class);
 
         when(accountExtractor.fromEvent(any())).thenReturn(someAccount("this-is-the-new-account-id"));
-        when(eventUserExtractor.fromEvent(any())).thenReturn(someUser());
+        when(eventUserExtractor.fromCreationEvent(any())).thenReturn(someUser());
 
         service = new SubscriptionEventService(accountExtractor, accountRepository, eventUserExtractor, userRepository);
     }
@@ -61,18 +61,18 @@ public class SubscriptionEventServiceTest {
     public void sendsEventToExtractorThenSavesResultingUser() {
         User aNewUser = someUser();
         SubscriptionEvent someEvent = someEvent().build();
-        when(eventUserExtractor.fromEvent(someEvent)).thenReturn(aNewUser);
+        when(eventUserExtractor.fromCreationEvent(someEvent)).thenReturn(aNewUser);
 
         service.create(someEvent);
 
-        verify(eventUserExtractor).fromEvent(someEvent);
+        verify(eventUserExtractor).fromCreationEvent(someEvent);
         verify(userRepository).save(aNewUser);
     }
 
     @Test
     public void assignsNewAccountToUser() {
         User aNewUser = someUser();
-        when(eventUserExtractor.fromEvent(any())).thenReturn(aNewUser);
+        when(eventUserExtractor.fromCreationEvent(any())).thenReturn(aNewUser);
         when(accountExtractor.fromEvent(any())).thenReturn(someAccount("this-is-the-new-account-id"));
 
         service.create(someEvent().build());

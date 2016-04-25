@@ -36,7 +36,7 @@ public class SubscriptionEventService {
         Account newAccount = accountExtractor.fromEvent(createEvent);
         accountRepository.save(newAccount);
 
-        User newUser = userExtractor.fromEvent(createEvent);
+        User newUser = userExtractor.fromCreationEvent(createEvent);
         newUser.setAccount(newAccount);
         userRepository.save(newUser);
 

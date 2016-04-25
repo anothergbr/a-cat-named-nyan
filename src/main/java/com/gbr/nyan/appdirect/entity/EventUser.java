@@ -1,6 +1,6 @@
 package com.gbr.nyan.appdirect.entity;
 
-public class User {
+public class EventUser {
     private String uuid;
     private String openId;
     private String email;
@@ -25,5 +25,25 @@ public class User {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 }

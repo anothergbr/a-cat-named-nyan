@@ -7,7 +7,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+import static com.gbr.nyan.domain.Account.Edition.BASIC;
 import static com.gbr.nyan.support.HttpClientHelper.anAppDirectHttpClient;
 import static com.gbr.nyan.support.HttpClientHelper.get;
 import static com.gbr.nyan.support.Iterables.toList;
@@ -35,7 +35,8 @@ public class CanCreateSubscription {
     private UserRepository userRepository;
 
     @Before
-    public void startFakeAppDirect() throws Exception {
+    public void setup() throws Exception {
+        userRepository.deleteAll();
         fakeAppDirect = FakeAppDirect.create(42534).start();
     }
 
@@ -54,24 +55,39 @@ public class CanCreateSubscription {
     }
 
     @Test
-    @Ignore("until the 2 extractors have proper implementations")
-    public void addsUserWhenEventIsGood() throws Exception {
+    public void addsUserAndAccountOnCreationEvent() throws Exception {
         HttpResponse response = anAppDirectHttpClient().execute(get(createSubscription(), "eventUrl", "http://localhost:42534/v1/events/dev-order"));
+        assertThat(fakeAppDirect.lastRequestPath(), is("/v1/events/dev-order"));
+        assertThat(response.getStatusLine().getStatusCode(), is(200));
 
         List<User> users = toList(userRepository.findAll());
         assertThat(users.size(), is(1));
 
         User createdUser = users.get(0);
+        assertThat(createdUser.getAccount().getEdition(), is(BASIC));
+        assertThat(createdUser.getFullName(), is("Gabriel SomeLastName"));
+        assertThat(createdUser.getUuid(), is("dac5f67b-7da7-4603-bb1b-3fd507509081"));
+        assertThat(createdUser.getEmail(), is("gabriel.x@gmail.com"));
+        assertThat(createdUser.getOpenIdUrl(), is("https://gabrielspub-test.byappdirect.com/openid/id/dac5f67b-7da7-4603-bb1b-3fd507509081"));
 
-        assertThat(fakeAppDirect.lastRequestPath(), is("/v1/events/dev-order"));
-        assertThat(response.getStatusLine().getStatusCode(), is(200));
-        assertThat(EntityUtils.toString(response.getEntity()), is("{\"success\":\"true\",\"account-identifier\":\"" + createdUser.getAccount().getId() + "\"))}"));
+        assertThat(EntityUtils.toString(response.getEntity()), is("{\"accountIdentifier\":\"" + createdUser.getAccount().getId() + "\",\"success\":\"true\"}"));
     }
 
     @Test
-    public void failureWhenOauthSignatureIsInvalid() throws Exception {
-        // TODO: eventually support oauth signature verification from auth header, i.e.
-        // authorization: OAuth oauth_consumer_key="a-cat-named-nyan-105612", oauth_nonce="-7162822245644540921", oauth_signature="0kL0WN17Sw8yhaAw4PkkFvVEnbY%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1461183771", oauth_version="1.0"
+    public void updatesAnExistingUserOnCreationEvent() throws Exception {
+        User userThatWillBeUpdated = new User();
+        userThatWillBeUpdated.setEmail("gabriel.x@gmail.com");
+        userRepository.save(userThatWillBeUpdated);
+
+        HttpResponse response = anAppDirectHttpClient().execute(get(createSubscription(), "eventUrl", "http://localhost:42534/v1/events/dev-order"));
+        assertThat(response.getStatusLine().getStatusCode(), is(200));
+
+        List<User> users = toList(userRepository.findAll());
+        assertThat(users.size(), is(1));
+
+        User updatedUser = userRepository.findByEmail("gabriel.x@gmail.com");
+        assertThat(updatedUser.getAccount().getEdition(), is(BASIC));
+        assertThat(updatedUser.getUuid(), is("dac5f67b-7da7-4603-bb1b-3fd507509081"));
     }
 
     private String createSubscription() {
