@@ -4,7 +4,7 @@ import com.gbr.nyan.appdirect.SubscriptionEventParser;
 import com.gbr.nyan.appdirect.SubscriptionEventService;
 import com.gbr.nyan.appdirect.entity.SubscriptionEvent;
 import com.gbr.nyan.appdirect.entity.SubscriptionResponse;
-import com.gbr.nyan.web.support.HttpClient;
+import com.gbr.nyan.web.support.OauthHttpClient;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +21,13 @@ import static org.springframework.http.HttpStatus.OK;
 
 public class SubscriptionControllerCreateTest {
     private SubscriptionController controller;
-    private HttpClient httpClient;
+    private OauthHttpClient httpClient;
     private SubscriptionEventParser eventParser;
     private SubscriptionEventService subscriptionEventService;
 
     @Before
     public void thisController() throws Exception {
-        httpClient = mock(HttpClient.class);
+        httpClient = mock(OauthHttpClient.class);
         eventParser = mock(SubscriptionEventParser.class);
         subscriptionEventService = mock(SubscriptionEventService.class);
 
@@ -47,12 +47,12 @@ public class SubscriptionControllerCreateTest {
     public void fetchesTheEventUrl() throws Exception {
         controller.create(of("http://some-event-url"));
 
-        verify(httpClient).get("http://some-event-url");
+        verify(httpClient).getJson("http://some-event-url");
     }
 
     @Test
     public void parsesTheEvent() throws Exception {
-        when(httpClient.get("http://some-event-url")).thenReturn("some-json");
+        when(httpClient.getJson("http://some-event-url")).thenReturn("some-json");
 
         controller.create(of("http://some-event-url"));
 

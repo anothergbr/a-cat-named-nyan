@@ -40,6 +40,7 @@ repositories {
 
 dependencies {
     compile "org.apache.httpcomponents:httpclient:4.5.2"
+    compile "oauth.signpost:signpost-core:1.2.1.2"
     compile 'com.github.jknack:handlebars:4.0.5'
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.springframework.boot:spring-boot-starter-security"

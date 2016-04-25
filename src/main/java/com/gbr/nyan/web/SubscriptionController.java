@@ -4,7 +4,7 @@ import com.gbr.nyan.appdirect.SubscriptionEventParser;
 import com.gbr.nyan.appdirect.SubscriptionEventService;
 import com.gbr.nyan.appdirect.entity.SubscriptionEvent;
 import com.gbr.nyan.appdirect.entity.SubscriptionResponse;
-import com.gbr.nyan.web.support.HttpClient;
+import com.gbr.nyan.web.support.OauthHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,13 +21,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 public class SubscriptionController {
-    private final HttpClient jsonHttpClient;
+    private final OauthHttpClient oauthHttpClient;
     private final SubscriptionEventParser subscriptionEventParser;
     private final SubscriptionEventService subscriptionEventService;
 
     @Autowired
-    public SubscriptionController(HttpClient jsonHttpClient, SubscriptionEventParser subscriptionEventParser, SubscriptionEventService subscriptionEventService) {
-        this.jsonHttpClient = jsonHttpClient;
+    public SubscriptionController(OauthHttpClient oauthHttpClient, SubscriptionEventParser subscriptionEventParser, SubscriptionEventService subscriptionEventService) {
+        this.oauthHttpClient = oauthHttpClient;
         this.subscriptionEventParser = subscriptionEventParser;
         this.subscriptionEventService = subscriptionEventService;
     }
@@ -52,7 +52,7 @@ public class SubscriptionController {
             return badRequest().body(failure().withErrorCode("INVALID_RESPONSE"));
         }
 
-        String rawEvent = jsonHttpClient.get(eventUrl.get());
+        String rawEvent = oauthHttpClient.getJson(eventUrl.get());
         SubscriptionEvent event = subscriptionEventParser.fromJson(rawEvent);
 
         SubscriptionResponse response = processor.apply(event);
