@@ -9,7 +9,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,7 @@ import static com.gbr.nyan.support.HttpClientHelper.anAppDirectHttpClient;
 import static com.gbr.nyan.support.HttpClientHelper.get;
 import static com.gbr.nyan.support.Iterables.toList;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -64,13 +64,12 @@ public class CanChangeSubscription {
     }
 
     @Test
-    @Ignore("until I get a sample subscription change!")
     public void updatesUserEditionAccordingToChangeEvent() throws Exception {
         Account existingBasicAccount = saveAnAccount(BASIC);
         saveAUserWith("gabriel.x@gmail.com", existingBasicAccount);
 
-        HttpResponse response = anAppDirectHttpClient().execute(get(changeSubscription(), "eventUrl", "http://localhost:42534/v1/events/dev-change"));
-        assertThat(fakeAppDirect.lastRequestPath(), is("/v1/events/dev-change"));
+        HttpResponse response = anAppDirectHttpClient().execute(get(changeSubscription(), "eventUrl", "http://localhost:42534/v1/events/dev-change?account-id=" + existingBasicAccount.getId()));
+        assertThat(fakeAppDirect.lastRequestPath(), startsWith("/v1/events/dev-change"));
         assertThat(response.getStatusLine().getStatusCode(), is(200));
 
         List<User> users = toList(userRepository.findAll());

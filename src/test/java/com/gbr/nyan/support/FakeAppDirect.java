@@ -36,6 +36,7 @@ public class FakeAppDirect {
         server.createContext("/v1/events/dummyNotice", new OauthSecuredJson("events/subscription-notice-stateless.json"));
 
         server.createContext("/v1/events/dev-order", new OauthSecuredJson("events/subscription-order-development.json"));
+        server.createContext("/v1/events/dev-change", new OauthSecuredJson("events/subscription-change-development.json"));
         server.createContext("/v1/events/dev-cancel", new OauthSecuredJson("events/subscription-cancel-development.json"));
 
         server.start();
