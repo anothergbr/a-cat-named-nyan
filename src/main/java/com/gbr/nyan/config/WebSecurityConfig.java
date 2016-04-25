@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .attribute("email").type("http://axschema.org/contact/email").required(true)
                 .and()
                 .attribute("fullname").type("http://axschema.org/namePerson").required(true);
-        http.logout().logoutSuccessUrl("/login?logout=true");
+        http.logout().logoutSuccessUrl("https://gabrielspub-test.byappdirect.com/");
     }
 
     private void allowFrames(HttpSecurity http) throws Exception {
