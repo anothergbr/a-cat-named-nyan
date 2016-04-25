@@ -33,6 +33,9 @@ public class SubscriptionEventServiceCreateTest {
         when(accountExtractor.fromEvent(any())).thenReturn(someAccount("this-is-the-new-account-id"));
         when(eventUserExtractor.fromCreationEvent(any())).thenReturn(someUser());
 
+        when(accountRepository.save(any(Account.class))).thenReturn(someAccount("this-is-the-new-account-id"));
+        when(userRepository.save(any(User.class))).thenReturn(someUser());
+
         service = new SubscriptionEventService(accountExtractor, accountRepository, eventUserExtractor, userRepository);
     }
 

@@ -40,9 +40,11 @@ public class SubscriptionEventServiceChangeTest {
 
     @Test
     public void sendsEventToExtractorThenUpdatesExistingAccount() {
+
         Account existingAccountWithNewEdition = someAccount("this-is-an-existing-account-id");
         SubscriptionEvent someEvent = someEvent().build();
         when(accountExtractor.whenAccountExists(someEvent)).thenReturn(existingAccountWithNewEdition);
+        when(accountRepository.save(existingAccountWithNewEdition)).thenReturn(existingAccountWithNewEdition);
 
         SubscriptionResponse response = service.change(someEvent);
 
