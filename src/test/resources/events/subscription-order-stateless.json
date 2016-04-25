@@ -1,6 +1,9 @@
 {
   "type": "SUBSCRIPTION_ORDER",
-  "marketplace": { "partner": "ACME", "baseUrl": "https://acme.appdirect.com" },
+  "marketplace": {
+    "partner": "ACME",
+    "baseUrl": "https://acme.appdirect.com"
+  },
   "applicationUuid": null,
   "flag": "STATELESS",
   "creator": {
@@ -32,13 +35,21 @@
       "addonOfferingCode": null,
       "pricingDuration": "MONTHLY",
       "items": [
-        { "unit": "USER", "quantity": 10 },
-        { "unit": "MEGABYTE", "quantity": 15 }
+        {
+          "unit": "USER",
+          "quantity": 10
+        },
+        {
+          "unit": "MEGABYTE",
+          "quantity": 15
+        }
       ]
     },
     "notice": null,
-    "configuration": { "domain": "mydomain" }
+    "configuration": {
+      "domain": "mydomain"
+    }
   },
   "returnUrl": "https://www.appdirect.com/finishprocure?token=dummyOrder",
-  "links": [ ]
+  "links": []
 }
