@@ -1,5 +1,5 @@
 # a-cat-named-nyan
-[![Build Status](https://travis-ci.org/anothergbr/a-cat-named-nyan.svg?branch=master)](https://travis-ci.org/anothergbr/a-cat-named-nyan) [![Coverage Status](https://coveralls.io/repos/github/anothergbr/a-cat-named-nyan/badge.svg?branch=master)](https://coveralls.io/github/anothergbr/a-cat-named-nyan?branch=master)
+[![Build Status](https://travis-ci.org/gbranchaudrubenovitch/a-cat-named-nyan.svg?branch=master)](https://travis-ci.org/gbranchaudrubenovitch/a-cat-named-nyan) [![Coverage Status](https://coveralls.io/repos/github/gbranchaudrubenovitch/a-cat-named-nyan/badge.svg?branch=master)](https://coveralls.io/github/gbranchaudrubenovitch/a-cat-named-nyan?branch=master)
 
 ![an image of nyan cat](http://i.imgur.com/880eyVm.gif "Nyan Cat")
 
