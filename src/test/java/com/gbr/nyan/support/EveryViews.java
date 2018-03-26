@@ -16,7 +16,7 @@ public class EveryViews {
                 .collect(toList());
 
         assertThat(cssHrefs, hasItems(
-                containsString("/bootstrap/3.3.6/css/bootstrap.min.css"),
-                containsString("/bootstrap/3.3.6/css/bootstrap-theme.min.css")));
+                containsString("/bootstrap/3.3.7/css/bootstrap.min.css"),
+                containsString("/bootstrap/3.3.7/css/bootstrap-theme.min.css")));
     }
 }
