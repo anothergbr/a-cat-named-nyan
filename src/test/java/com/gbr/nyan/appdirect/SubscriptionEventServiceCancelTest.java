@@ -26,7 +26,7 @@ public class SubscriptionEventServiceCancelTest {
     private UserRepository userRepository;
 
     @Before
-    public void thisService() throws Exception {
+    public void thisService() {
         accountExtractor = mock(AccountExtractor.class);
         accountRepository = mock(AccountRepository.class);
         userRepository = mock(UserRepository.class);
@@ -59,9 +59,9 @@ public class SubscriptionEventServiceCancelTest {
         verify(accountExtractor).whenAccountExists(someEvent);
 
         verify(userRepository).findAllByAccount(accountToDelete);
-        verify(userRepository).save(someUsers);
+        verify(userRepository).saveAll(someUsers);
 
-        verify(accountRepository).delete("this-will-be-deleted");
+        verify(accountRepository).deleteById("this-will-be-deleted");
     }
 
     private User someUser(String email) {

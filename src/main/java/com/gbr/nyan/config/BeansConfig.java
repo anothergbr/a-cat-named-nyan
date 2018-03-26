@@ -13,8 +13,8 @@ import static javax.servlet.DispatcherType.REQUEST;
 @Configuration
 public class BeansConfig {
     @Bean
-    public FilterRegistrationBean registerFullRequestLogger() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+    public FilterRegistrationBean<FullRequestLogFilter> registerFullRequestLogger() {
+        FilterRegistrationBean<FullRequestLogFilter> registration = new FilterRegistrationBean<>();
         registration.setDispatcherTypes(REQUEST);
         registration.setFilter(new FullRequestLogFilter());
 

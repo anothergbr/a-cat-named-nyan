@@ -70,9 +70,9 @@ public class SubscriptionEventService {
 
         Iterable<User> allUsersInThisAccount = userRepository.findAllByAccount(accountToDelete);
         allUsersInThisAccount.forEach(u -> u.setAccount(null));
-        userRepository.save(allUsersInThisAccount);
+        userRepository.saveAll(allUsersInThisAccount);
 
-        accountRepository.delete(accountToDelete.getId());
+        accountRepository.deleteById(accountToDelete.getId());
         logger.info("CANCEL ORDER - deleted account #" + accountToDelete.getId());
 
         return success();

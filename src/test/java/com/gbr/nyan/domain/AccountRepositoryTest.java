@@ -30,18 +30,18 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    public void savesNewAccount() throws Exception {
+    public void savesNewAccount() {
         Account aNewAccount = aNewAccount(PREMIUM);
 
         repository.save(aNewAccount);
-        Account retrievedAccount = repository.findOne(aNewAccount.getId());
+        Account retrievedAccount = repository.findById(aNewAccount.getId()).get();
 
         assertThat(retrievedAccount.getEdition(), is(PREMIUM));
     }
 
     @Test
-    public void retrievesExistingAccounts() throws Exception {
-        repository.save(asList(aNewAccount(BASIC), aNewAccount(PREMIUM)));
+    public void retrievesExistingAccounts() {
+        repository.saveAll(asList(aNewAccount(BASIC), aNewAccount(PREMIUM)));
 
         List<Account> allAccounts = toList(repository.findAll());
         assertThat(allAccounts.size(), is(2));

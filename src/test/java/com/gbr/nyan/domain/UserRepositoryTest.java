@@ -36,26 +36,26 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void savesNewUser() throws Exception {
+    public void savesNewUser() {
         User aNewUser = aNewUser("some@email.com", existingAccount, "Gerry X");
 
         repository.save(aNewUser);
-        User retrievedUser = repository.findOne(aNewUser.getEmail());
+        User retrievedUser = repository.findById(aNewUser.getEmail()).get();
 
         assertThat(retrievedUser.getFullName(), is("Gerry X"));
         assertThat(retrievedUser.getAccount(), is(notNullValue()));
     }
 
     @Test
-    public void retrievesExistingUsers() throws Exception {
-        repository.save(asList(aNewUser("test@email.ca", existingAccount, "Richard Y"), aNewUser("other@email.jp", existingAccount, "Stephanie Z")));
+    public void retrievesExistingUsers() {
+        repository.saveAll(asList(aNewUser("test@email.ca", existingAccount, "Richard Y"), aNewUser("other@email.jp", existingAccount, "Stephanie Z")));
 
         List<User> allUsers = toList(repository.findAll());
         assertThat(allUsers.size(), is(2));
     }
 
     @Test
-    public void findsUserByOpenIdUrl() throws Exception {
+    public void findsUserByOpenIdUrl() {
         User aNewUser = aNewUser("some@email.ca", existingAccount, "Hopen Highdee");
         aNewUser.setOpenIdUrl("12345@openid.com");
 
@@ -66,7 +66,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void findsUserByEmail() throws Exception {
+    public void findsUserByEmail() {
         User aNewUser = aNewUser("x@z.com", existingAccount, "some name");
 
         repository.save(aNewUser);
@@ -79,9 +79,9 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void findsAllUsersByAccount() throws Exception {
+    public void findsAllUsersByAccount() {
         Account anotherAccount = aSavedAccount();
-        repository.save(asList(aNewUser("test@email.ca", existingAccount, "Richard Y"), aNewUser("other@email.jp", anotherAccount, "Stephanie Z"), aNewUser("xy@z.jp", anotherAccount, "Charles K")));
+        repository.saveAll(asList(aNewUser("test@email.ca", existingAccount, "Richard Y"), aNewUser("other@email.jp", anotherAccount, "Stephanie Z"), aNewUser("xy@z.jp", anotherAccount, "Charles K")));
 
         List<User> retrievedUsers = toList(repository.findAllByAccount(anotherAccount));
         assertThat(retrievedUsers.size(), is(2));

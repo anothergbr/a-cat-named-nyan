@@ -26,7 +26,7 @@ public class SubscriptionControllerChangeTest {
     private SubscriptionEventService subscriptionEventService;
 
     @Before
-    public void thisController() throws Exception {
+    public void thisController() {
         httpClient = mock(OauthHttpClient.class);
         eventParser = mock(SubscriptionEventParser.class);
         subscriptionEventService = mock(SubscriptionEventService.class);
@@ -62,7 +62,8 @@ public class SubscriptionControllerChangeTest {
     @Test
     public void sendsTheParsedEventToTheService() throws Exception {
         SubscriptionEvent someEvent = new SubscriptionEvent();
-        when(eventParser.fromJson(anyString())).thenReturn(someEvent);
+        when(httpClient.getJson("http://some-event-url")).thenReturn("some-json");
+        when(eventParser.fromJson("some-json")).thenReturn(someEvent);
 
         controller.change(of("http://some-event-url"));
 

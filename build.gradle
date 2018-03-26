@@ -1,7 +1,4 @@
 buildscript {
-    ext {
-        springBootVersion = '1.5.10.RELEASE'
-    }
     repositories {
         mavenCentral()
     }
@@ -9,7 +6,7 @@ buildscript {
 
 
 plugins {
-    id 'org.springframework.boot' version '1.5.10.RELEASE'
+    id 'org.springframework.boot' version '2.0.0.RELEASE'
     id "com.github.kt3k.coveralls" version "2.6.3"
 }
 
@@ -17,10 +14,9 @@ plugins {
 apply plugin: "java"
 apply plugin: "war"
 apply plugin: "jacoco"
+apply plugin: 'io.spring.dependency-management'
 
 version = '0.1'
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:all"
@@ -32,7 +28,7 @@ repositories {
 
 
 dependencies {
-    compile "org.apache.httpcomponents:httpclient:4.5.2"
+    compile "org.apache.httpcomponents:httpclient"
     compile "oauth.signpost:signpost-core:1.2.1.2"
     compile 'com.github.jknack:handlebars:4.0.5'
     compile 'javax.xml.bind:jaxb-api:2.3.0'
@@ -41,11 +37,10 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-devtools"
     compile "org.springframework.security:spring-security-openid"
-    compile "net.rakugakibox.springbootext:spring-boot-ext-logback-access:1.1" // shows access log on console (only for embedded containers)
+    compile "net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1" // shows access log on console (only for embedded containers)
     compile "org.postgresql:postgresql:9.4.1208"
 
     runtime "com.h2database:h2"
-    providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
 
     testCompile "org.springframework.boot:spring-boot-starter-test"
     testCompile "org.springframework.security:spring-security-test"

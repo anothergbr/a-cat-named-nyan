@@ -13,8 +13,6 @@ import static com.gbr.nyan.domain.Account.Edition.BASIC;
 import static com.gbr.nyan.web.support.SecurityContextHelper.logInUser;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class CatControllerTest {
@@ -24,7 +22,7 @@ public class CatControllerTest {
     @Before
     public void thisController() throws Exception {
         viewRenderer = mock(HandlebarsRenderer.class);
-        when(viewRenderer.render(anyString(), anyObject())).thenReturn("the body of the cat");
+        when(viewRenderer.render(anyString(), any())).thenReturn("the body of the cat");
 
         controller = new CatController(viewRenderer);
     }

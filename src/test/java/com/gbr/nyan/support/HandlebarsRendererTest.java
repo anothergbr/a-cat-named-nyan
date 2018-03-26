@@ -8,7 +8,6 @@ import org.junit.Test;
 import static java.util.Collections.singletonMap;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class HandlebarsRendererTest {
@@ -42,7 +41,7 @@ public class HandlebarsRendererTest {
 
     @Test
     public void returnsTemplateResults() throws Exception {
-        when(someTemplate.apply(anyString())).thenReturn("this is the results of the template");
+        when(someTemplate.apply(anyMap())).thenReturn("this is the results of the template");
 
         String replacedTemplate = renderer.render("some-view", singletonMap("some", "context"));
 
