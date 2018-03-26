@@ -7,7 +7,7 @@ This was made as part of the AppDirect 2015 coding challenge.
 It's a very simple java web app integrated with some of Appdirect's subscription APIs.
 
 ## Requirements
-* Java 9+
+* Java 8+
 
 ## Running the tests
 * `./gradlew test`
