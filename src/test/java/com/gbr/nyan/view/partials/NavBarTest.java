@@ -31,7 +31,7 @@ public class NavBarTest {
     }
 
     @Test
-    public void showsLogoutAndHidesLoginWhenLoggedIn() throws Exception {
+    public void showsLogoutAndHidesLoginWhenLoggedIn() {
         Element logoutButton = loggedInDocument.select("a[href=/logout]").first();
         assertThat(logoutButton.text(), is("Logout"));
 

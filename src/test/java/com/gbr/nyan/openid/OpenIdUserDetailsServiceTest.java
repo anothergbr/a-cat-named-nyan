@@ -19,7 +19,7 @@ public class OpenIdUserDetailsServiceTest {
     private OpenIdUserDetailsService service;
 
     @Before
-    public void thisService() throws Exception {
+    public void thisService() {
         userExtractor = mock(TokenUserExtractor.class);
         userRepository = mock(UserRepository.class);
 

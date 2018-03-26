@@ -88,13 +88,11 @@ public class CanCreateSubscription {
         assertThat(updatedUser.getUuid(), is("dac5f67b-7da7-4603-bb1b-3fd507509081"));
     }
 
-    private User saveAUserWith(String email) {
+    private void saveAUserWith(String email) {
         User user = new User();
         user.setEmail(email);
 
         userRepository.save(user);
-
-        return user;
     }
 
     private String createSubscription() {

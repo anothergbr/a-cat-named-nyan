@@ -16,11 +16,11 @@ public class FullRequestLogFilter implements Filter {
     private final static Logger logger = LoggerFactory.getLogger(FullRequestLogFilter.class);
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         logger.info("Init logger Request Filter");
     }
 
-    private void logRequest(HttpServletRequest request) throws IOException {
+    private void logRequest(HttpServletRequest request) {
         logger.debug("### Request Headers:");
         for (String header : list(request.getHeaderNames())) {
             logger.debug("\t* {}: {}", new Object[]{header, request.getHeader(header)});

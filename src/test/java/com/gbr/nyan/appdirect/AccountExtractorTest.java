@@ -11,28 +11,28 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class AccountExtractorTest {
-    private AccountExtractor extractor = new AccountExtractor();
+    private final AccountExtractor extractor = new AccountExtractor();
 
     @Test
-    public void readsEditionFromEvent() throws Exception {
+    public void readsEditionFromEvent() {
         Account account = extractor.fromEvent(someEvent().withEdition(PREMIUM).build());
         assertThat(account.getEdition(), is(PREMIUM));
     }
 
     @Test
-    public void doesNotSetAccountIdInGeneral() throws Exception {
+    public void doesNotSetAccountIdInGeneral() {
         Account account = extractor.fromEvent(someEvent().build());
         assertThat(account.getId(), is(nullValue()));
     }
 
     @Test
-    public void setsAccountIdWhenAccountIsKnownToExist() throws Exception {
+    public void setsAccountIdWhenAccountIsKnownToExist() {
         Account account = extractor.whenAccountExists(someEvent().withAccountIdentifier("the-account-id").build());
         assertThat(account.getId(), is("the-account-id"));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void throwsIfAccountIsMissingWhenItShouldExist() throws Exception {
+    public void throwsIfAccountIsMissingWhenItShouldExist() {
         SubscriptionEvent eventMissingAccount = someEvent().build();
         eventMissingAccount.getPayload().setAccount(null);
 

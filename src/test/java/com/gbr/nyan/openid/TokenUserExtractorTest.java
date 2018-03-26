@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
 import static org.springframework.security.openid.OpenIDAuthenticationStatus.SUCCESS;
 
 public class TokenUserExtractorTest {
-    private TokenUserExtractor extractor = new TokenUserExtractor();
+    private final TokenUserExtractor extractor = new TokenUserExtractor();
 
     @Test
     public void extractsUserFromFullToken() {

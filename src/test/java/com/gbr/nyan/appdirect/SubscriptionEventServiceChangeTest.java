@@ -21,7 +21,7 @@ public class SubscriptionEventServiceChangeTest {
     private SubscriptionEventService service;
 
     @Before
-    public void thisService() throws Exception {
+    public void thisService() {
         accountExtractor = mock(AccountExtractor.class);
         accountRepository = mock(AccountRepository.class);
 

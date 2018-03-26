@@ -16,7 +16,7 @@ public class SubscriptionEventParserTest {
     private SubscriptionEventParser parser;
 
     @Before
-    public void thisParser() throws Exception {
+    public void thisParser() {
         parser = new SubscriptionEventParser(objectMapperConfiguredLikeSpringDoes());
     }
 

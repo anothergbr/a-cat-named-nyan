@@ -3,7 +3,7 @@ package com.gbr.nyan.appdirect.entity;
 public class SubscriptionResponse {
     private String accountIdentifier;
     private String errorCode;
-    private String success;
+    private final String success;
 
     public static SubscriptionResponse failure() {
         return new SubscriptionResponse("false");

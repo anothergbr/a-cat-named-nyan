@@ -12,16 +12,16 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class EventUserExtractorCreateTest {
-    private EventUserExtractor extractor = new EventUserExtractor();
+    private final EventUserExtractor extractor = new EventUserExtractor();
 
     @Test
-    public void doesNotSetAccount() throws Exception {
+    public void doesNotSetAccount() {
         User user = extractor.fromCreationEvent(eventWith(someUser()));
         assertThat(user.getAccount(), is(nullValue()));
     }
 
     @Test
-    public void readsUserFromTheCreatorFieldsOfTheEvent() throws Exception {
+    public void readsUserFromTheCreatorFieldsOfTheEvent() {
         SubscriptionEvent anEvent = eventWith(someUser()
                 .withEmail("g@x.com")
                 .withUuid("1234")
@@ -38,7 +38,7 @@ public class EventUserExtractorCreateTest {
     }
 
     @Test
-    public void doesNotAddTrailingSpaceToFullName() throws Exception {
+    public void doesNotAddTrailingSpaceToFullName() {
         User user = extractor.fromCreationEvent(eventWith(someUser()
                 .withFirstName("Just the first")));
 
@@ -46,7 +46,7 @@ public class EventUserExtractorCreateTest {
     }
 
     @Test
-    public void doesNotAddLeadingSpaceToFullName() throws Exception {
+    public void doesNotAddLeadingSpaceToFullName() {
         User user = extractor.fromCreationEvent(eventWith(someUser()
                 .withLastName("Just a last name")));
 

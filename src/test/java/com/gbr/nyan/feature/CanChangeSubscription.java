@@ -91,14 +91,12 @@ public class CanChangeSubscription {
         return account;
     }
 
-    private User saveAUserWith(String email, Account account) {
+    private void saveAUserWith(String email, Account account) {
         User user = new User();
         user.setEmail(email);
         user.setAccount(account);
 
         userRepository.save(user);
-
-        return user;
     }
 
     private String changeSubscription() {

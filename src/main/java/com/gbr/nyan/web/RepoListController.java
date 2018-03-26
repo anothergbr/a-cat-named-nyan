@@ -38,12 +38,8 @@ class RepoListController {
     @ResponseBody
     @RequestMapping(value = "/repo-list", method = GET, produces = "text/html")
     public String listRepos(@RequestParam Optional<String> addFakeUser, Optional<String> upgradeMe) throws IOException {
-        if (addFakeUser.isPresent()) {
-            createNewUser();
-        }
-        if (upgradeMe.isPresent()) {
-            upgradeMe();
-        }
+        addFakeUser.ifPresent(s -> createNewUser());
+        upgradeMe.ifPresent(s -> upgradeMe());
 
         Map<String, Object> viewContext = new HashMap<>();
         viewContext.put("page-title", "A cat named Nyan - Content of the repositories");

@@ -27,7 +27,7 @@ public class CanShowLoginPage {
     }
 
     @Test
-    public void returnsOkAndUtf8Html() throws Exception {
+    public void returnsOkAndUtf8Html() {
         String contentType = response.getHeaders().getContentType().toString();
         assertThat(response.getStatusCode(), is(OK));
         assertThat(contentType, is("text/html;charset=UTF-8"));
